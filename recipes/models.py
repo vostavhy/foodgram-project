@@ -10,7 +10,7 @@ class Recipe(models.Model):
     description = models.TextField()
     slug = models.SlugField(max_length=100, unique=True)
     preparation_time = models.IntegerField()  # время приготовления в минутах
-    image = models.ImageField(upload_to='recipes_images/')  # поле для рисунка
+    image = models.ImageField(upload_to='recipes/images/')  # поле для рисунка
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
 
 

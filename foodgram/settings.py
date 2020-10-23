@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -116,8 +116,60 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# теперь логотип можно будет запросить по адресу sitename.ex**/static/**images/logo.png
+
+# задаём адрес директории, куда командой *collectstatic* будет собрана вся статика
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# путь к дирректории для загрузки изображений
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Login
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = 'index'
+# LOGOUT_REDIRECT_URL = "index"
+
+# подключаем движок для сохранения электронных писем в виде файлов
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# дирректория, куда будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+# Идентификатор текущего сайта
+SITE_ID = 1
+
+# Logging
+if DEBUG is False:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {'console': {'level': 'DEBUG', 'class': 'logging.StreamHandler'}},
+        'loggers': {'django.db.backends': {'handlers': ['console'], 'level': 'DEBUG'}},
+    }
+
+# Кеширование
+CACHES = {
+        'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+}
+
+# API
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
+
+REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.IsAuthenticated',
+        ],
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ],
+    }
+
