@@ -4,7 +4,7 @@ from multiselectfield import MultiSelectField
 
 User = get_user_model()
 
-# теги
+# теги на старнице рецепта
 TAGS = (('breakfast', 'Завтрак'),
         ('lunch', 'Обед'),
         ('supper', 'Ужин'))
