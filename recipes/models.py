@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
-    name = models.TextField(db_index=True, unique=True)
+    name = models.TextField(max_length=100, db_index=True, unique=True)
     description = models.TextField()
     slug = models.SlugField(max_length=100, unique=True)
     preparation_time = models.IntegerField()  # время приготовления в минутах
@@ -29,12 +29,12 @@ class Subscription(models.Model):
 
 class Unit(models.Model):
     """единица измерения ингредиента"""
-    name = models.TextField(blank=True, null=True)
+    name = models.TextField(max_length=100, blank=True, null=True)
 
 
 class Ingredient(models.Model):
     """ингредиенты, из которых состоит рецепт"""
-    name = models.TextField(db_index=True, unique=True)
+    name = models.TextField(max_length=100, db_index=True, unique=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='ingredients')
 
 
