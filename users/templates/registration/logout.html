@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Вы вышли из системы{% endblock %}
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="main container">
+        <div class="main__header">
+            <h1 class="main__title">Выход</h1>
+        </div>
+        <p>Вы вышли из своей учётной записи. Ждём вас снова!</p>
+    </main>
+{% endblock %}

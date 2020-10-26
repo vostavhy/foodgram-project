@@ -8,9 +8,9 @@
         <title>{% block title %}Заголовок страницы{% endblock %}</title>
 
         <!-- Загрузка статики -->
-        {% load static %}
         {% block static %}
-            <link rel="stylesheet" href="{% static "css/form.css" %}">
+            {% load static %}
+            <link rel="stylesheet" href="{% static 'css/form.css' %}">
         {% endblock %}
 
     </head>
