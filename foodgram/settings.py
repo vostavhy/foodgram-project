@@ -138,10 +138,11 @@ LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'index'
 # LOGOUT_REDIRECT_URL = "index"
 
-# подключаем движок для сохранения электронных писем в виде файлов
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# дирректория, куда будут складываться файлы писем
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+if DEBUG is True:
+    # подключаем движок для сохранения электронных писем в виде файлов
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    # дирректория, куда будут складываться файлы писем
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 # Идентификатор текущего сайта
 SITE_ID = 1

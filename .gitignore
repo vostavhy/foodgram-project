@@ -134,3 +134,4 @@ dmypy.json
 
 migrations/
 media/
+sent_emails/
