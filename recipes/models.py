@@ -20,6 +20,11 @@ class Recipe(models.Model):
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
     tags = MultiSelectField(choices=TAGS, blank=True, null=True)
 
+    class Meta:
+        ordering = ['-created_at', ]
+        verbose_name = 'Рецепт'
+        verbose_name_plural = 'Рецепты'
+
 
 class Order(models.Model):
     """заказ для выгрузки списка ингридиентов в txt"""
@@ -43,6 +48,10 @@ class Ingredient(models.Model):
     """ингредиенты, из которых состоит рецепт"""
     name = models.TextField(max_length=100, db_index=True, unique=True)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='ingredients')
+
+    class Meta:
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
 
 class RecipeIngredient(models.Model):

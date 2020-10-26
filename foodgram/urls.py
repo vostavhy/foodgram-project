@@ -22,7 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # авторизация, регистрация, сброс и изменение пароля
-    path('auth/', include('users.urls'))
+    path('auth/', include('users.urls')),
+
+    # обработчик главной страницы ищем в urls.py приложения posts
+    path('', include('recipes.urls')),
 ]
 
 
