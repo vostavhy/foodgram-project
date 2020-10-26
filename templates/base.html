@@ -9,7 +9,10 @@
         <title>{% block title %}Заголовок страницы{% endblock %}</title>
         <!-- Загрузка статики -->
         {% load static %}
-        <link rel="stylesheet" href="{% static "css/form.css" %}">
+
+        {% block static %}
+            <link rel="stylesheet" href="{% static "css/form.css" %}">
+        {% endblock %}
 
     </head>
     <body class="body">
