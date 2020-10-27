@@ -7,7 +7,7 @@ User = get_user_model()
 # теги на старнице рецепта
 TAGS = (('breakfast', 'Завтрак'),
         ('lunch', 'Обед'),
-        ('supper', 'Ужин'))
+        ('dinner', 'Ужин'))
 
 
 class Recipe(models.Model):
