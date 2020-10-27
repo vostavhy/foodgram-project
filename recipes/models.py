@@ -14,7 +14,6 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
     name = models.TextField(max_length=100, db_index=True, unique=True)
     description = models.TextField(verbose_name='Описание')
-    slug = models.SlugField(max_length=100, unique=True)
     preparation_time = models.IntegerField()  # время приготовления в минутах
     image = models.ImageField(upload_to='recipes/images/')  # поле для рисунка
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
@@ -33,10 +32,10 @@ class Order(models.Model):
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
 
 
-class Subscription(models.Model):
+class Follow(models.Model):
     """подписка на автора"""
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscribes')  # на кого подписываются
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscribers')  # кто подписывается
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')  # на кого подписываются
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')  # кто подписывается
 
 
 class Unit(models.Model):
