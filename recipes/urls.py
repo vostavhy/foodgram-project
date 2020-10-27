@@ -23,16 +23,17 @@ urlpatterns = [
     path('follow/', views.follow_index, name='follow_index'),
 
     # взаимодействие с моделью Favorite - список избранного
-    # добавить рецепт в избранное
-    path('<int:recipe_id>/favorite_add', views.favorite_add, name='favorite_add'),
-    path('<int:recipe_id>/favorite_delete', views.favorite_delete, name='favorite_delete'),
     # страница избранного
     path('favorite/', views.favorite_index, name='favorite_index'),
+    # добавить рецепт в избранное
+    path('favorite_add/<int:recipe_id>', views.favorite_add, name='favorite_add'),
+    path('favorite_delete/<int:recipe_id>', views.favorite_delete, name='favorite_delete'),
 
     # взаимодействие с моделью Order - список покупок
-    # добавить рецепт в список покупок
-    path('<int:recipe_id>/order_add', views.order_add, name='order_add'),
-    path('<int:recipe_id>/order_delete', views.order_delete, name='order_delete'),
     # страница списка покупок
     path('order/', views.order_index, name='order_index'),
+    # добавить рецепт в список покупок
+    path('order_add/<int:recipe_id>', views.order_add, name='order_add'),
+    path('order_delete/<int:recipe_id>/', views.order_delete, name='order_delete'),
+
 ]
