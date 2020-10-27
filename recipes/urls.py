@@ -27,13 +27,12 @@ urlpatterns = [
     path('<int:recipe_id>/favorite_add', views.favorite_add, name='favorite_add'),
     path('<int:recipe_id>/favorite_delete', views.favorite_delete, name='favorite_delete'),
     # страница избранного
-    path('favorite/'),
+    path('favorite/', views.favorite_index, name='favorite_index'),
 
     # взаимодействие с моделью Order - список покупок
     # добавить рецепт в список покупок
     path('<int:recipe_id>/order_add', views.order_add, name='order_add'),
     path('<int:recipe_id>/order_delete', views.order_delete, name='order_delete'),
     # страница списка покупок
-    path('order/'),
-
+    path('order/', views.order_index, name='order_index'),
 ]
