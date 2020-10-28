@@ -96,7 +96,7 @@ class Follow(models.Model):
 
 class Ingredient(models.Model):
     """ингредиенты, из которых состоит рецепт"""
-    name = models.CharField(max_length=100, db_index=True, unique=True, verbose_name='Название')
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Название')
     unit = models.CharField(max_length=25, verbose_name='Единица измерения')
 
     def __str__(self):
