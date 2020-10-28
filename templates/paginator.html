@@ -3,7 +3,7 @@
     <ul class="pagination__container">
         {% if items.has_previous %}
             <li class="pagination__item">
-                <a class="pagination__link link" href="{% set_page request items.previous_page_number %}">
+                <a class="pagination__link link" href="?{% set_page request items.previous_page_number %}">
                     <span class="icon-left"></span>
                 </a>
             </li>
