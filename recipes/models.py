@@ -11,9 +11,6 @@ TAGS = (('breakfast', 'Завтрак'),
 
 
 class RecipeQuerySet(models.QuerySet):
-    # рецепты по тегу
-    def recipes_tag(self, tag):
-        return self.filter(tags__contains=tag)
 
     # список рецептов одного пользователя
     def recipes_author(self, user):
