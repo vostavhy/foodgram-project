@@ -43,13 +43,13 @@ class Test(models.Model):
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
-    name = models.CharField(max_length=100, db_index=True, unique=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes', verbose_name='Автор')
+    name = models.CharField(max_length=100, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
-    preparation_time = models.IntegerField()  # время приготовления в минутах
-    image = models.ImageField(upload_to='recipes/images/')  # поле для рисунка
-    created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
-    tags = MultiSelectField(choices=TAGS, blank=True, null=True)
+    preparation_time = models.IntegerField(verbose_name='Время приготовления')  # в минутах
+    image = models.ImageField(upload_to='recipes/images/', verbose_name='Изображение')  # поле для рисунка
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')
+    tags = MultiSelectField(choices=TAGS, blank=True, null=True, verbose_name='Теги')
 
     # перегрузим Manager для данной модели
     objects = RecipeQuerySet.as_manager()
@@ -57,6 +57,7 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
+    # получить список ингредиентов
     @property
     def ingredients(self):
         return Ingredient.objects.filter(ingredient_res__recipe=self)
@@ -69,9 +70,10 @@ class Recipe(models.Model):
 
 class Order(models.Model):
     """заказ для выгрузки списка ингридиентов в txt"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='orders')
-    created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Пользователь')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='orders',
+                               verbose_name='Рецепт')
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')
 
     class Meta:
         ordering = ['-created_at', ]
@@ -81,8 +83,8 @@ class Order(models.Model):
 
 class Follow(models.Model):
     """подписка на автора"""
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')  # на кого подписываются
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')  # кто подписывается
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers', verbose_name='Автор')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following', verbose_name='Пользователь')
 
     def __str__(self):
         return f'{self.user} подписан на {self.author}'
@@ -92,34 +94,25 @@ class Follow(models.Model):
         verbose_name_plural = 'Подписки'
 
 
-class Unit(models.Model):
-    """единица измерения ингредиента"""
-    name = models.CharField(max_length=100, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Единица измерения'
-
-
 class Ingredient(models.Model):
     """ингредиенты, из которых состоит рецепт"""
-    name = models.CharField(max_length=100, db_index=True, unique=True)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, db_index=True, unique=True, verbose_name='Название')
+    unit = models.CharField(max_length=25, verbose_name='Единица измерения')
 
     def __str__(self):
         return self.name
 
     class Meta:
+        ordering = ['name', ]
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
 
 
 class RecipeIngredient(models.Model):
     """промежуточная модель, объединяющая рецепты и ингредиенты"""
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='ingredient_res')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт')
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='ingredient_res',
+                                   verbose_name='Ингредиент')
     amount = models.IntegerField()
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
 
@@ -132,8 +125,8 @@ class RecipeIngredient(models.Model):
 
 class Favorite(models.Model):
     """избранные рецепты"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')  # избранное для пользователя
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='favorites')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites', verbose_name='Пользователь')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='favorites', verbose_name='Рецепт')
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
 
     def __str__(self):
@@ -142,3 +135,4 @@ class Favorite(models.Model):
     class Meta:
         ordering = ['-created_at', ]
         verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные рецепты'
