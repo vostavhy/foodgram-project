@@ -25,6 +25,7 @@ pytest==6.1.1             # via pytest-django
 pytz==2020.1              # via django
 requests==2.24.0          # via -r requirements.in
 six==1.15.0               # via packaging, pip-tools
+sorl-thumbnail==12.6.3    # via -r requirements.in
 sqlparse==0.4.1           # via django
 toml==0.10.1              # via pytest
 urllib3==1.25.10          # via requests
