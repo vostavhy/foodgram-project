@@ -65,7 +65,7 @@ class Recipe(models.Model):
         verbose_name_plural = 'Рецепты'
 
 
-class Order(models.Model):
+class Purchase(models.Model):
     """заказ для выгрузки списка ингридиентов в txt"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Пользователь')
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='orders',

@@ -1,5 +1,5 @@
 from django import template
-from recipes.models import Follow, Order, Favorite
+from recipes.models import Follow, Purchase, Favorite
 register = template.Library()
 
 
@@ -12,7 +12,7 @@ def check_follow(author, user):
 @register.filter
 def check_order(recipe, user):
     """присутствует ли рецепт в спике покупок пользователя"""
-    return Order.objects.filter(recipe_id=recipe.id, user_id=user.id).exists()
+    return Purchase.objects.filter(recipe_id=recipe.id, user_id=user.id).exists()
 
 
 @register.filter
