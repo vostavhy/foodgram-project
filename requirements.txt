@@ -9,8 +9,9 @@ attrs==20.2.0             # via pytest
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
 click==7.1.2              # via pip-tools
+django-debug-toolbar==3.1.1  # via -r requirements.in
 django-multiselectfield==0.1.12  # via -r requirements.in
-django==3.1.2             # via -r requirements.in, django-multiselectfield, djangorestframework
+django==3.1.2             # via -r requirements.in, django-debug-toolbar, django-multiselectfield, djangorestframework
 djangorestframework==3.12.1  # via -r requirements.in
 idna==2.10                # via requests
 iniconfig==1.1.1          # via pytest
@@ -26,7 +27,7 @@ pytz==2020.1              # via django
 requests==2.24.0          # via -r requirements.in
 six==1.15.0               # via packaging, pip-tools
 sorl-thumbnail==12.6.3    # via -r requirements.in
-sqlparse==0.4.1           # via django
+sqlparse==0.4.1           # via django, django-debug-toolbar
 toml==0.10.1              # via pytest
 urllib3==1.25.10          # via requests
 
