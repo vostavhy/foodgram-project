@@ -7,7 +7,7 @@ def index(request):
     # получаем теги и фильтр по ним
     tags, tags_filter = get_tags(request)
 
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.select_related('author')
     if tags_filter:
         recipes = recipes.filter(tags_filter)
 
