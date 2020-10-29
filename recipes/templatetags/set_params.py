@@ -19,7 +19,6 @@ def set_tags(request, name):
         tags_list.append(name)
 
     request_copy.setlist('tag', tags_list)
-
     return request_copy.urlencode()
 
 
