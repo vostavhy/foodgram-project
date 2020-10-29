@@ -11,9 +11,9 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'unit',)
+    list_display = ('pk', 'title', 'dimension',)
     # фильтрация по названию
-    list_filter = ('name', )
+    list_filter = ('title', )
 
 
 admin.site.register(Recipe, RecipeAdmin)
