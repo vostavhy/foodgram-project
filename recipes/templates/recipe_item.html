@@ -1,4 +1,4 @@
-<div class="card" data-id="121">
+<div class="card" data-id="{{ recipe.id }}">
     <a href="{% url 'recipe' recipe.id %}" class="link" target="_blank">
         <!-- Отображение картинки -->
         {% load thumbnail %}
@@ -30,12 +30,12 @@
         {% load check_item %}
         <div class="card__footer">
             {% if recipe|check_order:request.user %}
-                <button class="button button_style_light-blue" name="purchases"><span class="icon-plus button__icon"></span>Уже в покупках</button>
+                <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span> Рецепт добавлен</button>
             {% else %}
-                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span> Добавить в покупки </button>
             {%  endif %}
             {% if recipe|check_favorite:request.user %}
-                <button class="button button_style_none" name="favorites"><span class="icon-favorite"></span></button>
+                <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>
             {% else %}
                 <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
             {% endif %}
