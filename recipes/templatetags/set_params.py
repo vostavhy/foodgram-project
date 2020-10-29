@@ -4,19 +4,21 @@ register = template.Library()
 
 
 @register.simple_tag
-def set_tags(request, tags, name):
+def set_tags(request, name):
     """устанавливаем GET параметры в зависимости от выбранных тегов"""
+    # получим список тегов из url
     request_copy = request.GET.copy()
+    tags_list = request_copy.getlist('tag')
 
     # если тег уже был выбран - удаляем его из GET параметров
-    if request.GET.get(name):
-        request_copy.pop(name)
+    if name in tags_list:
+        tags_list.remove(name)
 
-    # если тег не был выбран, прописываем его и ранее установленные теги в GET параметры
+    # если тег не был выбран, прописываем его в GET параметры
     else:
-        for tag in tags:
-            request_copy[tag] = 'tag'
-        request_copy[name] = 'tag'
+        tags_list.append(name)
+
+    request_copy.setlist('tag', tags_list)
 
     return request_copy.urlencode()
 

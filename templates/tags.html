@@ -2,17 +2,17 @@
 <ul class="tags">
     <li class="tags__item">
         <a id="breakfast" class="tags__checkbox tags__checkbox_style_orange
-        tags__checkbox{% if 'breakfast' in tags %}_active{% endif %}" href="?{% set_tags request tags 'breakfast' %}"></a>
+        tags__checkbox{% if 'breakfast' in tags %}_active{% endif %}" href="?{% set_tags request 'breakfast' %}"></a>
         <span class="tags__label">Завтрак</span>
     </li>
     <li class="tags__item">
         <a id="lunch" class="tags__checkbox tags__checkbox_style_green
-        tags__checkbox{% if 'lunch' in tags %}_active{% endif %}" href="?{% set_tags request tags 'lunch' %}"></a>
+        tags__checkbox{% if 'lunch' in tags %}_active{% endif %}" href="?{% set_tags request 'lunch' %}"></a>
         <label for="lunch" class="tags__label">Обед</label>
     </li>
     <li class="tags__item">
         <a id="dinner" class="tags__checkbox tags__checkbox_style_purple
-        tags__checkbox{% if 'dinner' in tags %}_active{% endif %}" href="?{% set_tags request tags 'dinner' %}"></a>
+        tags__checkbox{% if 'dinner' in tags %}_active{% endif %}" href="?{% set_tags request 'dinner' %}"></a>
         <label for="dinner" class="tags__label">Ужин</label>
     </li>
 </ul>

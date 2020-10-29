@@ -23,8 +23,9 @@ def get_tags(request):
     tags = []
 
     # если переменная с названием тега есть в url, добавляем её tags[]
+    tags_list = request.GET.getlist('tag')
     for name, r_name in TAGS:
-        if request.GET.get(name):
+        if name in tags_list:
             tags.append(name)
 
     if tags:
