@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'sorl.thumbnail',
     'debug_toolbar',
+    'rest_framework',
 
 ]
 
@@ -128,9 +129,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# добавление слеша в конце ссылки
-APPEND_SLASH = False
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -185,7 +183,7 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.IsAuthenticated',
         ],
         'DEFAULT_AUTHENTICATION_CLASSES': [
-            'rest_framework_simplejwt.authentication.JWTAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
         ],
     }
-

@@ -1,12 +1,12 @@
 from django import template
-from recipes.models import Follow, Purchase, Favorite
+from recipes.models import Subscription, Purchase, Favorite
 register = template.Library()
 
 
 @register.filter
 def check_follow(author, user):
     """подписан ли текущий пользователь на автора"""
-    return Follow.objects.filter(author_id=author.id, user_id=user.id).exists()
+    return Subscription.objects.filter(author_id=author.id, user_id=user.id).exists()
 
 
 @register.filter

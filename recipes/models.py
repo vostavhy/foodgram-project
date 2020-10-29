@@ -21,8 +21,8 @@ class RecipeQuerySet(models.QuerySet):
         return self.filter(author__in=users)
 
     # список покупок одного пользователя
-    def recipe_orders(self, user):
-        return self.filter(orders__user=user)
+    def recipe_purchase(self, user):
+        return self.filter(purchases__user=user)
 
     # список избранных рецептов одного пользователя
     def recipe_favorites(self, user):
@@ -68,9 +68,12 @@ class Recipe(models.Model):
 class Purchase(models.Model):
     """заказ для выгрузки списка ингридиентов в txt"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Пользователь')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='orders',
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='purchases',
                                verbose_name='Рецепт')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')
+
+    def __str__(self):
+        return f'{self.recipe} в покупках у {self.user}'
 
     class Meta:
         ordering = ['-created_at', ]
@@ -78,10 +81,10 @@ class Purchase(models.Model):
         verbose_name_plural = 'Покупки'
 
 
-class Follow(models.Model):
+class Subscription(models.Model):
     """подписка на автора"""
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers', verbose_name='Автор')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following', verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscribers', verbose_name='Пользователь')
 
     def __str__(self):
         return f'{self.user} подписан на {self.author}'

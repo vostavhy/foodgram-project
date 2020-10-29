@@ -21,11 +21,16 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # api
+    path('api/', include('api.urls')),
+
     # авторизация, регистрация, сброс и изменение пароля
     path('auth/', include('users.urls')),
 
     # обработчик главной страницы ищем в urls.py приложения posts
     path('', include('recipes.urls')),
+
+
 ]
 
 # для получения статики и изображений в DEBUG mode

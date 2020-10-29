@@ -16,6 +16,7 @@
 
     {# рецепты #}
     <div class="card-list">
+        {% csrf_token %}
         {% for recipe in page %}
             {% include 'recipe_item.html' with recipe=recipe %}
         {% endfor %}

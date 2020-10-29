@@ -7,7 +7,7 @@
         {% endthumbnail %}
     </a>
     <div class="card__body">
-        <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.title }}</a>
+        <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.name }}</a>
         <ul class="card__items">
             {% if 'lunch' in recipe.tags %}
                 <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
