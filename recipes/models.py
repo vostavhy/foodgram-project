@@ -13,7 +13,7 @@ TAGS = (('breakfast', 'Завтрак'),
 class RecipeQuerySet(models.QuerySet):
 
     # список рецептов одного пользователя
-    def recipes_author(self, user):
+    def profile(self, user):
         return self.filter(author=user)
 
     # список рецептов нескольких авторов
@@ -25,7 +25,7 @@ class RecipeQuerySet(models.QuerySet):
         return self.filter(purchases__user=user)
 
     # список избранных рецептов одного пользователя
-    def recipe_favorites(self, user):
+    def favorites(self, user):
         return self.filter(favorites__user=user)
 
 

@@ -14,16 +14,24 @@ def index(request, username=None):
     title = 'Рецепты'
     template = 'index.html'
     author = None
+    items_on_page = 6
 
     # если это страница профиля
-    if username:
+    if '/user/' in request.path:
         author = get_object_or_404(User, username=username)
         recipes = recipes.filter(author=author)
         title = author.get_full_name()
         template = 'profile_index.html'
 
+    # если это страница избранного
+    if request.path == '/favorite/':
+        recipes = recipes.filter(favorites__user=request.user)
+        title = 'Избранное'
+        items_on_page = 3
+        template = 'favorite_index.html'
+
     # получаем пагинатор и номер страницы
-    page, paginator = get_pagination_info(request, recipes)
+    page, paginator = get_pagination_info(request, recipes, per_page=items_on_page)
 
     context = {
         'page': page,
