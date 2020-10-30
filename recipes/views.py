@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from working_scripts.rendering_scripts import get_pagination_info, get_tags
@@ -14,7 +15,6 @@ def index(request, username=None):
     title = 'Рецепты'
     template = 'index.html'
     author = None
-    items_on_page = 6
 
     # если это страница профиля
     if '/user/' in request.path:
@@ -23,15 +23,8 @@ def index(request, username=None):
         title = author.get_full_name()
         template = 'profile_index.html'
 
-    # если это страница избранного
-    if request.path == '/favorite/':
-        recipes = recipes.filter(favorites__user=request.user)
-        title = 'Избранное'
-        items_on_page = 3
-        template = 'favorite_index.html'
-
     # получаем пагинатор и номер страницы
-    page, paginator = get_pagination_info(request, recipes, per_page=items_on_page)
+    page, paginator = get_pagination_info(request, recipes)
 
     context = {
         'page': page,
@@ -42,6 +35,37 @@ def index(request, username=None):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def favorite_index(request):
+    # получаем теги и фильтр по ним
+    tags, tags_filter = get_tags(request)
+
+    # выгружаем рецепты в избранном у авторизованного пользователя
+    recipes = Recipe.objects.select_related('author').filter(favorites__user=request.user)
+    if tags_filter:
+        recipes = recipes.filter(tags_filter)
+
+    title = 'Избранное'
+    template = 'favorite_index.html'
+    items_on_page = 3
+
+    # получаем пагинатор и номер страницы
+    page, paginator = get_pagination_info(request, recipes, per_page=items_on_page)
+
+    context = {
+        'page': page,
+        'paginator': paginator,
+        'tags': tags,
+        'title': title,
+    }
+
+    return render(request, template, context)
+
+
+def follow_index(request):
+    return None
 
 
 def new_recipe(request):
@@ -56,12 +80,10 @@ def recipe_delete(request):
     return None
 
 
-def follow_index(request):
-    return None
 
 
-def favorite_index(request):
-    return None
+
+
 
 
 def purchase_index(request):

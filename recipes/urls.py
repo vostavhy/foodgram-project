@@ -19,7 +19,7 @@ urlpatterns = [
     path('subscription/', views.follow_index, name='subscription_index'),
 
     # страница избранного
-    path('favorite/', views.index, name='favorite_index'),
+    path('favorite/', views.favorite_index, name='favorite_index'),
 
     # страница списка покупок
     path('purchase/', views.purchase_index, name='order_index'),
