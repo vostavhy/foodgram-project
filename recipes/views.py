@@ -48,12 +48,6 @@ def recipe_delete(request):
     return None
 
 
-def profile_index(request, username):
-    author = get_object_or_404(User, username=username)
-    recipes = Recipe.objects.select_related()
-    return None
-
-
 def follow_index(request):
     return None
 
