@@ -2,7 +2,6 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 import operator
 from functools import reduce
-from recipes.models import TAGS
 
 
 def get_pagination_info(request, posts, per_page=6):
@@ -20,13 +19,9 @@ def get_pagination_info(request, posts, per_page=6):
 
 def get_tags(request):
     """фильтрация рецептов по тегам"""
-    tags = []
 
-    # если переменная с названием тега есть в url, добавляем её tags[]
-    tags_list = request.GET.getlist('tag')
-    for name, r_name in TAGS:
-        if name in tags_list:
-            tags.append(name)
+    # получаем список переменных с названием тега
+    tags = request.GET.getlist('tag')
 
     if tags:
         tags_filter = reduce(operator.or_, (Q(tags__contains=tag) for tag in tags))
