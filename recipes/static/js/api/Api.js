@@ -4,7 +4,7 @@ class Api {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    return fetch(`api/purchases/`, {
+    return fetch(`/api/purchases/`, {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
@@ -18,7 +18,7 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`api/add_purchase/`, {
+    return fetch(`/api/add_purchase/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ class Api {
       })
   }
   removePurchases (id){
-    return fetch(`api/del_purchase/${id}/`, {
+    return fetch(`/api/del_purchase/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ class Api {
       })
   }
   addSubscriptions(id) {
-    return fetch(`api/add_subscription/`, {
+    return fetch(`/api/add_subscription/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ class Api {
       })
   }
   removeSubscriptions (id) {
-    return fetch(`api/del_subscription/${id}/`, {
+    return fetch(`/api/del_subscription/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ class Api {
       })
   }
   addFavorites (id)  {
-    return fetch(`api/add_favorite/`, {
+    return fetch(`/api/add_favorite/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ class Api {
         })
   }
   removeFavorites (id) {
-    return fetch(`api/del_favorite/${id}/`, {
+    return fetch(`/api/del_favorite/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -117,10 +117,10 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        return fetch(`api/ingredients?query=${text}/`, {
+        return fetch(`/api/ingredients?query=${text}/`, {
             headers: {
                 'Content-Type': 'application/json',
-
+                'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
             }
         })
             .then( e => {

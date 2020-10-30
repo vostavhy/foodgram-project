@@ -4,13 +4,13 @@ register = template.Library()
 
 
 @register.filter
-def check_follow(author, user):
+def check_subscription(author, user):
     """подписан ли текущий пользователь на автора"""
     return Subscription.objects.filter(author_id=author.id, user_id=user.id).exists()
 
 
 @register.filter
-def check_order(recipe, user):
+def check_purchase(recipe, user):
     """присутствует ли рецепт в спике покупок пользователя"""
     return Purchase.objects.filter(recipe_id=recipe.id, user_id=user.id).exists()
 

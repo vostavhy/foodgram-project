@@ -1,5 +1,5 @@
 <div class="card" data-id="{{ recipe.id }}">
-    <a href="{% url 'recipe' recipe.id %}" class="link" target="_blank">
+    <a href="{% url 'recipe_index' recipe.id %}" class="link" target="_blank">
         <!-- Отображение картинки -->
         {% load thumbnail %}
         {% thumbnail recipe.image "480x480" crop="center" upscale=True as im %}
@@ -7,7 +7,7 @@
         {% endthumbnail %}
     </a>
     <div class="card__body">
-        <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.name }}</a>
+        <a class="card__title link" href="{% url 'recipe_index' recipe.id %}" target="_blank">{{ recipe.name }}</a>
         <ul class="card__items">
             {% if 'lunch' in recipe.tags %}
                 <li class="card__item"><span class="badge badge_style_green">Обед</span></li>
@@ -22,17 +22,19 @@
         <div class="card__items card__items_column">
             <p class="card__text"><span class="icon-time"></span> {{ recipe.preparation_time }} мин.</p>
             <p class="card__text"><span class="icon-user"></span>
-                <a href="{% url 'profile' recipe.author.username %}" style="color: black">{{ recipe.author.get_full_name  }}</a></p>
+                <a href="{% url 'profile_index' recipe.author.username %}" style="color: black">{{ recipe.author.get_full_name  }}</a></p>
         </div>
     </div>
 
     {% if request.user.is_authenticated %}
         {% load check_item %}
         <div class="card__footer">
-            {% if recipe|check_order:request.user %}
-                <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span> Рецепт добавлен</button>
+            {% if recipe|check_purchase:request.user %}
+                <button class="button button_style_light-blue-outline" name="purchases">
+                    <span class="icon-check button__icon"></span> Рецепт добавлен </button>
             {% else %}
-                <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span> Добавить в покупки </button>
+                <button class="button button_style_light-blue" name="purchases" data-out>
+                    <span class="icon-plus button__icon"></span> Добавить в покупки </button>
             {%  endif %}
             {% if recipe|check_favorite:request.user %}
                 <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>

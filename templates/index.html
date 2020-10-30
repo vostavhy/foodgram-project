@@ -14,6 +14,12 @@
         {% include 'tags.html' with tags=tags%}
     </div>
 
+    {% if request.user.is_authenticated %}
+        {% block subscription %}
+            {# кнопка подписки #}
+        {% endblock %}
+    {% endif %}
+
     {# рецепты #}
     <div class="card-list">
         {% csrf_token %}
