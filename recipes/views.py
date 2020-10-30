@@ -64,8 +64,23 @@ def favorite_index(request):
     return render(request, template, context)
 
 
-def follow_index(request):
-    return None
+def subscription_index(request):
+    authors = User.objects.filter(followers__user=request.user).prefetch_related('recipes')
+
+    title = 'Мои подписки'
+    template = 'subscription_index.html'
+    items_on_page = 3
+
+    # получаем пагинатор и номер страницы
+    page, paginator = get_pagination_info(request, authors, per_page=items_on_page)
+
+    context = {
+        'page': page,
+        'paginator': paginator,
+        'title': title,
+    }
+
+    return render(request, template, context)
 
 
 def new_recipe(request):
@@ -78,12 +93,6 @@ def recipe_edit(request):
 
 def recipe_delete(request):
     return None
-
-
-
-
-
-
 
 
 def purchase_index(request):

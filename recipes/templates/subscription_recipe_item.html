@@ -1,7 +1,10 @@
 <li class="card-user__item">
     <div class="recipe">
-        <img src="recipes/static/images/testCardImg.png" alt="какой-то-текст" class="recipe__image">
-        <h3 class="recipe__title">Французские тосты</h3>
-        <p class="recipe__text"><span class="icon-time"></span> 20 мин.</p>
+        {% load thumbnail %}
+        {% thumbnail recipe.image "80x80" crop="center" upscale=True as im %}
+            <img src="{{ im.url }}" alt="{{ recipe.name }}" class="recipe__image">
+        {% endthumbnail %}
+        <h3 class="recipe__title">{{ recipe.name }}</h3>
+        <p class="recipe__text"><span class="icon-time"></span> {{ recipe.preparation_time }} мин.</p>
     </div>
 </li>

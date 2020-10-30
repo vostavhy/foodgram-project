@@ -1,25 +1,37 @@
+{% load user_filters %}
+
 <div class="card-list">
-        <div class="card-user" data-author="{{ subscription.author.id }}">
+        <div class="card-user" data-author="{{ author.id }}">
 
         <div class="card-user__header">
-            <h2 class="card-user__title">subscription.author.get_full_name</h2>
+            <h2 class="card-user__title">{{ author.get_full_name }}</h2>
         </div>
         <div class="card-user__body">
             <ul class="card-user__items">
 
                 {# последние три рецепта автора, на которого подписались #}
-                {% for recipe in author.recipes %}
-                    {% include 'subscription_recipe_item.html' with recipes=recipes %}
-                {% endfor %}
+                {% if author.recipes.all.count > 3 %}
 
-                <li class="card-user__item">
-                    <a href="#" class="card-user__link link">Еще 7 рецептов...</a>
-                </li>
+                    {% for recipe in author.recipes.all|separate %}
+                        {% include 'subscription_recipe_item.html' with recipe=recipe %}
+                    {% endfor %}
+
+                    <li class="card-user__item">
+                        <a href="{% url 'profile_index' username=author.username %}" class="card-user__link link">Еще {{ author.recipes.all.count|get_count }} рецептов...</a>
+                    </li>
+                {% else %}
+
+                    {% for recipe in author.recipes.all %}
+                        {% include 'subscription_recipe_item.html' with recipe=recipe %}
+                    {% endfor %}
+
+                {% endif %}
+
             </ul>
         </div>
 
         <div class="card-user__footer">
-            <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+            <button class="button button_style_light-blue button_size_auto button_style_blue" name="subscribe">Отписаться</button>
         </div>
     </div>
 </div>
