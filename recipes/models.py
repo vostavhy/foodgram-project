@@ -54,10 +54,16 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-    # получить список ингредиентов
+    # получить список ингредиентов их количества для определенного рецепта
     @property
     def ingredients(self):
-        return Ingredient.objects.filter(ingredient_res__recipe=self)
+        ingredients = Ingredient.objects.filter(ingredient_res__recipe=self)
+        ingredients_list = []
+        for ingredient in ingredients:
+            amount = RecipeIngredient.objects.get(recipe=self, ingredient=ingredient).amount
+            ingredients_list.append((ingredient, amount))
+
+        return ingredients_list
 
     class Meta:
         ordering = ['-created_at', ]
@@ -110,10 +116,10 @@ class Ingredient(models.Model):
 
 class RecipeIngredient(models.Model):
     """промежуточная модель, объединяющая рецепты и ингредиенты"""
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт', related_name='res_ingredient')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='ingredient_res',
                                    verbose_name='Ингредиент')
-    amount = models.IntegerField()
+    amount = models.PositiveIntegerField()
     created_at = models.DateTimeField('Дата создания', auto_now_add=True, db_index=True)
 
     def __str__(self):

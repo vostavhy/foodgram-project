@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import FileResponse
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from working_scripts.rendering_scripts import get_pagination_info, get_tags
@@ -97,6 +98,36 @@ def purchase_index(request):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def download_purchase_list(request):
+
+    recipes = Recipe.objects.purchases(user=request.user)
+    ingredients_dict = dict()
+
+    # с учетом того, что ингредиенты могут повторяться в разных рецептах,
+    # составим сводный словарь списка игредиентов и их единиц измерения со всех рецептов в покупках
+    for recipe in recipes:
+        ingredients_list = recipe.ingredients
+        for ingredient, amount in ingredients_list:
+
+            # если ингредиент уже есть - добавляем его количество к уже имеющемуся значению
+            if ingredient.title in ingredients_dict:
+                ingredients_dict[ingredient.title][0] += amount
+
+            # если нету - создаём
+            else:
+                ingredients_dict[ingredient.title] = [amount, ingredient.dimension]
+
+    # добавим полученный словарь в файл и отдадим его в Response
+    file = 'upload_files/purchase.txt'
+    with open(file, 'w') as f:
+        for ingredient_title, amount_dimension in ingredients_dict.items():
+            print(f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]}', file=f)
+
+    response = FileResponse(open(file, 'rb'), as_attachment=True)
+    return response
 
 
 def new_recipe(request):
