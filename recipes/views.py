@@ -43,7 +43,7 @@ def favorite_index(request):
     tags, tags_filter = get_tags(request)
 
     # выгружаем рецепты в избранном у авторизованного пользователя
-    recipes = Recipe.objects.select_related('author').filter(favorites__user=request.user)
+    recipes = Recipe.objects.favorites(user=request.user).select_related('author')
     if tags_filter:
         recipes = recipes.filter(tags_filter)
 
@@ -64,6 +64,7 @@ def favorite_index(request):
     return render(request, template, context)
 
 
+@login_required
 def subscription_index(request):
     authors = User.objects.filter(followers__user=request.user).prefetch_related('recipes')
 
@@ -83,6 +84,21 @@ def subscription_index(request):
     return render(request, template, context)
 
 
+@login_required
+def purchase_index(request):
+    recipes = Recipe.objects.purchases(user=request.user)
+
+    title = 'Список покупок'
+    template = 'purchase_index.html'
+
+    context = {
+        'recipes': recipes,
+        'title': title
+    }
+
+    return render(request, template, context)
+
+
 def new_recipe(request):
     return None
 
@@ -92,10 +108,6 @@ def recipe_edit(request):
 
 
 def recipe_delete(request):
-    return None
-
-
-def purchase_index(request):
     return None
 
 

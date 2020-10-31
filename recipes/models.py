@@ -17,11 +17,11 @@ class RecipeQuerySet(models.QuerySet):
         return self.filter(author=user)
 
     # список рецептов нескольких авторов
-    def recipes_authors(self, users):
+    def authors(self, users):
         return self.filter(author__in=users)
 
     # список покупок одного пользователя
-    def recipe_purchase(self, user):
+    def purchases(self, user):
         return self.filter(purchases__user=user)
 
     # список избранных рецептов одного пользователя
