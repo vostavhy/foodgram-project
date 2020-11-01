@@ -6,7 +6,7 @@ urlpatterns = [
 
     # взаимодействие с моделью Recipe
     # создать новый рецепт
-    path('new/', views.new_recipe, name='new_recipe'),
+    path('new/', views.recipe_create, name='recipe_create'),
     # страница рецепта
     path('recipe/<int:pk>/', views.recipe_index, name='recipe_index'),
     path('recipe/<int:pk>/edit', views.recipe_edit, name='recipe_edit'),

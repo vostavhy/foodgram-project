@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from working_scripts.rendering_scripts import get_pagination_info, get_tags
+from .forms import RecipeForm
 
 
 def index(request, username=None):
@@ -141,8 +142,38 @@ def recipe_index(request, pk):
     return render(request, template, context)
 
 
-def new_recipe(request):
-    return None
+def recipe_create(request):
+    template = 'recipe_create_form.html'
+    form = RecipeForm()
+    title = 'Создание рецепта'
+    context = {
+        'form': form,
+        'title': title,
+
+    }
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, files=request.FILES or None)
+
+        if form.is_valid():
+            # списки названий игредиентов и их количества
+            ingredient_titles = request.POST.getlist('nameIngredient')
+            ingredient_amounts = request.POST.getlist('valueIngredient')
+            if len(ingredient_titles) != len(ingredient_amounts):
+                return render(request, template, context)
+
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+
+            # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
+            for i in range(len(ingredient_titles)):
+                RecipeIngredient.objects.create(recipe=recipe,
+                                                ingredient=Ingredient.objects.get(title=ingredient_titles[i]),
+                                                amount=ingredient_amounts[i])
+            return redirect('index')
+        return render(request, template, context)
+    return render(request, template, context)
 
 
 def recipe_edit(request):

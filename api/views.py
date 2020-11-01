@@ -68,7 +68,7 @@ class SubscriptionView(APIView):
 class IngredientView(APIView):
 
     def get(self, request):
-        query = request.data.get('query').lower()
+        query = request.GET.get('query').lower()
         ingredients = Ingredient.objects.filter(title__contains=query)
         serializer = IngredientSerializer(ingredients, many=True)
         return Response(serializer.data)
