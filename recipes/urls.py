@@ -8,9 +8,9 @@ urlpatterns = [
     # создать новый рецепт
     path('new/', views.new_recipe, name='new_recipe'),
     # страница рецепта
-    path('<int:recipe_id>/', views.recipe_index, name='recipe_index'),
-    path('<int:recipe_id>/edit', views.recipe_edit, name='recipe_edit'),
-    path('<int:recipe_id>/delete', views.recipe_delete, name='recipe_delete'),
+    path('recipe/<int:pk>/', views.recipe_index, name='recipe_index'),
+    path('recipe/<int:pk>/edit', views.recipe_edit, name='recipe_edit'),
+    path('recipe/<int:pk>/delete', views.recipe_delete, name='recipe_delete'),
 
     # страница всех рецептов, созданных определенным пользователем
     path('user/<username>/', views.index, name='profile_index'),

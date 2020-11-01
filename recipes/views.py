@@ -130,6 +130,17 @@ def download_purchase_list(request):
     return response
 
 
+def recipe_index(request, pk):
+    recipe = get_object_or_404(Recipe, id=pk)
+    template = 'recipe_index.html'
+
+    context = {
+        'recipe': recipe,
+    }
+
+    return render(request, template, context)
+
+
 def new_recipe(request):
     return None
 
@@ -142,5 +153,4 @@ def recipe_delete(request):
     return None
 
 
-def recipe_index(request):
-    return None
+
