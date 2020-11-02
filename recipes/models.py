@@ -21,16 +21,6 @@ class RecipeQuerySet(models.QuerySet):
         return self.filter(favorites__user=user)
 
 
-class Test(models.Model):
-    name = models.CharField(max_length=100, db_index=True, unique=True)
-    tags = MultiSelectField(choices=TAGS, blank=True, null=True)
-
-    objects = RecipeQuerySet.as_manager()
-
-    def __str__(self):
-        return f'Name: {self.name} tags: {self.tags}'
-
-
 class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes', verbose_name='Автор')
     name = models.CharField(max_length=100, verbose_name='Название')

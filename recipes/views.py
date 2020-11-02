@@ -218,11 +218,7 @@ def recipe_edit(request, pk):
     return render(request, template, context)
 
 
-
-
-
-def recipe_delete(request):
-    return None
-
-
-
+def recipe_delete(request, pk):
+    recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может удалить рецепт
+    recipe.delete()
+    return redirect('index')
