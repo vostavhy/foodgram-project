@@ -17,6 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,9 +30,11 @@ urlpatterns = [
 
     # обработчик главной страницы ищем в urls.py приложения posts
     path('', include('recipes.urls')),
-
-
 ]
+
+# обработка ошибок 404, 500
+handler404 = 'recipes.views.page_not_found'  # noqa
+handler500 = 'recipes.views.server_error'  # noqa
 
 # для получения статики и изображений в DEBUG mode
 if settings.DEBUG:

@@ -25,7 +25,7 @@ SECRET_KEY = 'e(3#abay!^k*ga@dn(=-2rpzg$xmx+-^!0i%lg*u^*yio(vtzd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ]
 
 # необходим для debug_toolbar
 INTERNAL_IPS = [
@@ -157,7 +157,7 @@ if DEBUG is True:
 SITE_ID = 1
 
 # Logging
-if DEBUG is False:
+if DEBUG is True:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,

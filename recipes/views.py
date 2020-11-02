@@ -219,7 +219,17 @@ def recipe_edit(request, pk):
     return render(request, template, context)
 
 
+@login_required
 def recipe_delete(request, pk):
     recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может удалить рецепт
     recipe.delete()
     return redirect('index')
+
+
+def page_not_found(request, exception):
+    # exception содержит отладочную информацию
+    return render(request, 'misc/404.html', {'path': request.path}, status=404)
+
+
+def server_error(request):
+    return render(request, 'misc/500.html', status=500)
