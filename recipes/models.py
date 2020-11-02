@@ -46,7 +46,7 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-    # получить список ингредиентов их количества для определенного рецепта
+    # получить список ингредиентов и их количества для определенного рецепта
     @property
     def ingredients(self):
         ingredients = Ingredient.objects.filter(ingredient_res__recipe=self)

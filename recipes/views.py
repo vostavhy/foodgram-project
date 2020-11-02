@@ -142,14 +142,16 @@ def recipe_index(request, pk):
     return render(request, template, context)
 
 
+@login_required
 def recipe_create(request):
-    template = 'recipe_create_form.html'
+    template = 'recipe_form.html'
     form = RecipeForm()
     title = 'Создание рецепта'
+    button_name = 'Создать рецепт'
     context = {
         'form': form,
         'title': title,
-
+        'button_name': button_name
     }
 
     if request.method == 'POST':
@@ -176,8 +178,47 @@ def recipe_create(request):
     return render(request, template, context)
 
 
-def recipe_edit(request):
-    return None
+@login_required
+def recipe_edit(request, pk):
+    recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может редактировать рецепт
+    form = RecipeForm(request.POST or None, files=request.FILES or None, instance=recipe)
+
+    template = 'recipe_form.html'
+    title = 'Редактирование рецепта'
+    button_name = 'Сохранить'
+    checked_tags = recipe.tags
+    context = {
+        'recipe': recipe,
+        'form': form,
+        'title': title,
+        'button_name': button_name,
+        'checked_tags': checked_tags,
+    }
+
+    if request.method == 'POST':
+        if form.is_valid():
+            # списки названий игредиентов и их количества
+            ingredient_titles = request.POST.getlist('nameIngredient')
+            ingredient_amounts = request.POST.getlist('valueIngredient')
+            if len(ingredient_titles) != len(ingredient_amounts):
+                return render(request, template, context)
+
+            form.save()
+
+            # чтобы не дублировались ингредиенты
+            RecipeIngredient.objects.filter(recipe=recipe).delete()
+
+            # добавим связующие модели между рецептом и игредиентами заново
+            for i in range(len(ingredient_titles)):
+                RecipeIngredient.objects.create(recipe=recipe,
+                                                ingredient=Ingredient.objects.get(title=ingredient_titles[i]),
+                                                amount=ingredient_amounts[i])
+            return redirect('recipe_index', pk=recipe.id)
+        return render(request, template, context)
+    return render(request, template, context)
+
+
+
 
 
 def recipe_delete(request):
