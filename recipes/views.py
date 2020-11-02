@@ -122,7 +122,8 @@ def download_purchase_list(request):
                 ingredients_dict[ingredient.title] = [amount, ingredient.dimension]
 
     # добавим полученный словарь в файл и отдадим его в Response
-    file = 'upload_files/purchase.txt'
+    purchase_list_name = 'Список покупок.txt'
+    file = f'upload_files/{purchase_list_name}'
     with open(file, 'w') as f:
         for ingredient_title, amount_dimension in ingredients_dict.items():
             print(f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]}', file=f)

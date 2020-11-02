@@ -1,6 +1,7 @@
 from django import template
 
 register = template.Library()
+from recipes.models import Purchase
 
 
 @register.simple_tag
@@ -28,3 +29,10 @@ def set_page(request, page_number):
     request_copy = request.GET.copy()
     request_copy['page'] = page_number
     return request_copy.urlencode()
+
+
+@register.simple_tag
+def set_purchase_number(request):
+    """подсчет количества покупок"""
+    number = Purchase.objects.filter(user=request.user).count()
+    return number
