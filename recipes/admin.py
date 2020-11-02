@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Recipe, Purchase, Subscription, Ingredient, RecipeIngredient, \
-    Favorite, Test
+    Favorite
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -22,4 +22,3 @@ admin.site.register(Subscription)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(RecipeIngredient)
 admin.site.register(Favorite)
-admin.site.register(Test)
