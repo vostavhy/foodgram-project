@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'users',
     'recipes',
     'api',
@@ -59,7 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'foodgram.urls'
@@ -153,11 +157,11 @@ if DEBUG is True:
     # дирректория, куда будут складываться файлы писем
     EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
-# Идентификатор текущего сайта
+# Идентификатор текущего сайта. Необходим для flatpages
 SITE_ID = 1
 
 # Logging
-if DEBUG is True:
+if DEBUG is False:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,

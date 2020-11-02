@@ -17,7 +17,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +27,10 @@ urlpatterns = [
     # авторизация, регистрация, сброс и изменение пароля
     path('auth/', include('users.urls')),
 
-    # обработчик главной страницы ищем в urls.py приложения posts
+    # flatpages
+    path('pages/', include('django.contrib.flatpages.urls')),
+
+    # обработчик главной страницы ищем в urls.py приложения recipes
     path('', include('recipes.urls')),
 ]
 
