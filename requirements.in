@@ -6,6 +6,7 @@ Pillow
 django-multiselectfield
 sorl-thumbnail
 django-debug-toolbar
+flake8
 
 # DRF libraries
 djangorestframework

@@ -16,13 +16,17 @@ django-multiselectfield==0.1.12  # via -r requirements.in
 django==3.1.2             # via -r requirements.in, django-cors-headers, django-debug-toolbar, django-filter, django-multiselectfield, djangorestframework, djangorestframework-simplejwt
 djangorestframework-simplejwt==4.4.0  # via -r requirements.in
 djangorestframework==3.12.1  # via -r requirements.in, djangorestframework-simplejwt
+flake8==3.8.4             # via -r requirements.in
 idna==2.10                # via requests
 iniconfig==1.1.1          # via pytest
+mccabe==0.6.1             # via flake8
 packaging==20.4           # via pytest
 pillow==8.0.0             # via -r requirements.in
 pip-tools==5.3.1          # via -r requirements.in
 pluggy==0.13.1            # via pytest
 py==1.9.0                 # via pytest
+pycodestyle==2.6.0        # via flake8
+pyflakes==2.2.0           # via flake8
 pyjwt==1.7.1              # via djangorestframework-simplejwt
 pyparsing==2.4.7          # via packaging
 pytest-django==4.0.0      # via -r requirements.in
