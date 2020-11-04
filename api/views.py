@@ -2,19 +2,40 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
 
 from recipes.models import Purchase, Recipe, Favorite, Subscription, User, Ingredient
 from .serializers import PurchaseSerializer, IngredientSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
-class PurchaseView(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+class PurchaseViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    queryset = Purchase.objects.all()
+    serializer_class = PurchaseSerializer
 
+    def get_queryset(self):
+        """
+        получение списка рецептов
+        """
+        return Purchase.objects.filter(recipe__author=self.request.user)
+
+    def perform_create(self, serializer):
+        """
+        добавление рецепта в список покупок
+        """
+        recipe_id = int(self.request.data.get('id'))
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        user = self.request.user
+        serializer.save(user=user, recipe=recipe)
+
+        return Response({"success": True})
+
+    """
     # получение списка рецептов
-    def get(self, request):
-        purchases = Purchase.objects.filter(recipe__author=request.user)
-        serializer = PurchaseSerializer(purchases, many=True)
+    def list(self, request):
+        queryset = Purchase.objects.filter(recipe__author=request.user)
+        serializer = PurchaseSerializer(queryset, many=True)
         return Response({'purchases': serializer.data})
 
     # добавление рецепта в список покупок
@@ -29,6 +50,7 @@ class PurchaseView(APIView):
         purchase = get_object_or_404(Purchase.objects.all(), recipe_id=pk, user=request.user)
         purchase.delete()
         return Response({"success": True})
+    """
 
 
 class FavoriteView(APIView):

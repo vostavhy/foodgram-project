@@ -1,10 +1,13 @@
 from rest_framework import serializers
+from recipes.models import Purchase
 
 
-class PurchaseSerializer(serializers.Serializer):
-    user = serializers.CharField(max_length=100)
-    recipe = serializers.CharField(max_length=100)
-    created_at = serializers.DateTimeField()
+class PurchaseSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        fields = '__all__'
+        model = Purchase
 
 
 class IngredientSerializer(serializers.Serializer):

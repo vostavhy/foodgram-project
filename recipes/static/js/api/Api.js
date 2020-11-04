@@ -18,7 +18,7 @@ class Api {
       })
   }
   addPurchases (id) {
-    return fetch(`/api/add_purchase/`, {
+    return fetch(`/api/purchases/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
