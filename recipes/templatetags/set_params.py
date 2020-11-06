@@ -1,7 +1,7 @@
 from django import template
+from recipes.models import Purchase
 
 register = template.Library()
-from recipes.models import Purchase
 
 
 @register.simple_tag
