@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from recipes.models import Purchase, Favorite
+from recipes.models import Purchase, Favorite, Subscription
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
@@ -18,6 +18,12 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
 
 
+class SubscriptionSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        fields = '__all__'
+        model = Subscription
 
 
 class IngredientSerializer(serializers.Serializer):
