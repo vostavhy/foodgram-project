@@ -36,7 +36,7 @@ class Api {
       })
   }
   removePurchases (id){
-    return fetch(`/api/del_purchase/${id}/`, {
+    return fetch(`/api/purchases/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

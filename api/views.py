@@ -15,42 +15,22 @@ class PurchaseViewSet(viewsets.ModelViewSet):
     serializer_class = PurchaseSerializer
 
     def get_queryset(self):
-        """
-        получение списка рецептов
-        """
+        """получение списка рецептов."""
         return Purchase.objects.filter(recipe__author=self.request.user)
 
     def perform_create(self, serializer):
-        """
-        добавление рецепта в список покупок
-        """
+        """добавление рецепта в список покупок."""
         recipe_id = int(self.request.data.get('id'))
         recipe = get_object_or_404(Recipe, id=recipe_id)
         user = self.request.user
         serializer.save(user=user, recipe=recipe)
-
         return Response({"success": True})
 
-    """
-    # получение списка рецептов
-    def list(self, request):
-        queryset = Purchase.objects.filter(recipe__author=request.user)
-        serializer = PurchaseSerializer(queryset, many=True)
-        return Response({'purchases': serializer.data})
-
-    # добавление рецепта в список покупок
-    def post(self, request):
-        recipe_id = int(request.data.get('id'))
-        recipe = Recipe.objects.get(id=recipe_id)
-        Purchase.objects.create(recipe=recipe, user=request.user)
+    def destroy(self, request, *args, **kwargs):
+        """удаление рецепта из списка покупок."""
+        instance = get_object_or_404(Purchase, recipe_id=int(kwargs['pk']), user=request.user)
+        self.perform_destroy(instance)
         return Response({"success": True})
-
-    # удаление рецепта из списка покупок
-    def delete(self, request, pk):
-        purchase = get_object_or_404(Purchase.objects.all(), recipe_id=pk, user=request.user)
-        purchase.delete()
-        return Response({"success": True})
-    """
 
 
 class FavoriteView(APIView):
