@@ -1,7 +1,8 @@
-from django.core.paginator import Paginator
-from django.db.models import Q
 import operator
 from functools import reduce
+
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 def get_pagination_info(request, posts, per_page=6):

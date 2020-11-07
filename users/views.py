@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, render
 from django.core import mail
+from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 
 from .forms import CreationForm

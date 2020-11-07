@@ -1,4 +1,5 @@
 from django import template
+
 from recipes.models import Purchase
 
 register = template.Library()

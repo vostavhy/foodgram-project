@@ -19,6 +19,7 @@ djangorestframework==3.12.1  # via -r requirements.in, djangorestframework-simpl
 flake8==3.8.4             # via -r requirements.in
 idna==2.10                # via requests
 iniconfig==1.1.1          # via pytest
+isort==5.6.4              # via -r requirements.in
 mccabe==0.6.1             # via flake8
 packaging==20.4           # via pytest
 pillow==8.0.0             # via -r requirements.in

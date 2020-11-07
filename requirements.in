@@ -6,7 +6,10 @@ Pillow
 django-multiselectfield
 sorl-thumbnail
 django-debug-toolbar
+
+# Check code style
 flake8
+isort
 
 # DRF libraries
 djangorestframework

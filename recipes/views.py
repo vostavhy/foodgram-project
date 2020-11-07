@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Recipe, User, RecipeIngredient, Ingredient
+from django.shortcuts import get_object_or_404, redirect, render
+
 from working_scripts.rendering_scripts import get_pagination_info, get_tags
+
 from .forms import RecipeForm
+from .models import Ingredient, Recipe, RecipeIngredient, User
 
 
 def index(request, username=None):
