@@ -1,6 +1,23 @@
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PurchaseViewSet
+from .views import PurchaseViewSet, FavoriteViewSet
 
 router = DefaultRouter()
 router.register(r'purchases', PurchaseViewSet)
-urlpatterns = router.urls
+router.register(r'favorites', FavoriteViewSet)
+
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
+
+
+
+
+
+
+
+
+
+
+

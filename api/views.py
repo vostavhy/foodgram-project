@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import viewsets
 
 from recipes.models import Purchase, Recipe, Favorite, Subscription, User, Ingredient
-from .serializers import PurchaseSerializer, IngredientSerializer
+from .serializers import PurchaseSerializer, IngredientSerializer, FavoriteSerializer
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -16,14 +16,13 @@ class PurchaseViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """получение списка рецептов."""
-        return Purchase.objects.filter(recipe__author=self.request.user)
+        return self.queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         """добавление рецепта в список покупок."""
         recipe_id = int(self.request.data.get('id'))
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        user = self.request.user
-        serializer.save(user=user, recipe=recipe)
+        serializer.save(user=self.request.user, recipe=recipe)
         return Response({"success": True})
 
     def destroy(self, request, *args, **kwargs):
@@ -33,20 +32,22 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         return Response({"success": True})
 
 
-class FavoriteView(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+class FavoriteViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    queryset = Favorite.objects.all()
+    serializer_class = FavoriteSerializer
 
-    # добавление рецепта в список избранного
-    def post(self, request):
-        recipe_id = int(request.data.get('id'))
-        recipe = Recipe.objects.get(id=recipe_id)
-        Favorite.objects.create(recipe=recipe, user=request.user)
+    def create(self, request, *args, **kwargs):
+        """добавление рецепта в список избранного."""
+        recipe_id = int(self.request.data.get('id'))
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+        Favorite.objects.create(user=request.user, recipe=recipe)
         return Response({"success": True})
 
-    # удаление рецепта из списка избранного
-    def delete(self, request, pk):
-        favorite = get_object_or_404(Favorite.objects.all(), recipe_id=pk, user=request.user)
-        favorite.delete()
+    def destroy(self, request, *args, **kwargs):
+        """удаление рецепта из списка избранного."""
+        instance = get_object_or_404(Favorite, recipe_id=int(kwargs['pk']), user=request.user)
+        self.perform_destroy(instance)
         return Response({"success": True})
 
 
