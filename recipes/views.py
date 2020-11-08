@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import FileResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from working_scripts.rendering_scripts import get_pagination_info, get_tags
@@ -137,13 +137,13 @@ def download_purchase_list(request):
             ingredients[title][0] += amount
 
     # добавим полученный словарь в файл и отдадим его в Response
-    purchase_name = 'Список покупок.txt'
-    file = f'upload_files/{purchase_name}'
-    with open(file, 'w', encoding="utf-8") as f:
-        for ingredient_title, amount_dimension in ingredients.items():
-            print(f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]}', file=f)
+    file_name = 'Purchase list.txt'
+    txt = ''
+    for ingredient_title, amount_dimension in ingredients.items():
+        txt += f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]} \n'
 
-    response = FileResponse(open(file, 'rb'), as_attachment=True)
+    response = HttpResponse(txt, content_type='application/text charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename={file_name}'
     return response
 
 
