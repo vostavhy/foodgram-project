@@ -10,11 +10,11 @@ urlpatterns = [
     path('new/', views.recipe_create, name='recipe_create'),
     # страница рецепта
     path('recipe/<int:pk>/', views.recipe_index, name='recipe_index'),
-    path('recipe/<int:pk>/edit', views.recipe_edit, name='recipe_edit'),
-    path('recipe/<int:pk>/delete', views.recipe_delete, name='recipe_delete'),
+    path('recipe/<int:pk>/edit/', views.recipe_edit, name='recipe_edit'),
+    path('recipe/<int:pk>/delete/', views.recipe_delete, name='recipe_delete'),
 
     # страница всех рецептов, созданных определенным пользователем
-    path('user/<username>/', views.index, name='profile_index'),
+    path('user/<str:username>/', views.profile_index, name='profile_index'),
 
     # страница с рецептами авторов, на которых подписан пользователь
     path('subscription/', views.subscription_index, name='subscription_index'),

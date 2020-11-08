@@ -8,7 +8,7 @@ from .forms import RecipeForm
 from .models import Ingredient, Recipe, RecipeIngredient, User
 
 
-def index(request, username=None):
+def index(request):
     # получаем теги и фильтр по ним
     tags, tags_filter = get_tags(request)
 
@@ -20,12 +20,32 @@ def index(request, username=None):
     template = 'index.html'
     author = None
 
-    # если это страница профиля
-    if '/user/' in request.path:
-        author = get_object_or_404(User, username=username)
-        recipes = recipes.filter(author=author)
-        title = author.get_full_name()
-        template = 'profile_index.html'
+    # получаем пагинатор и номер страницы
+    page, paginator = get_pagination_info(request, recipes)
+
+    context = {
+        'page': page,
+        'paginator': paginator,
+        'tags': tags,
+        'title': title,
+        'author': author
+    }
+
+    return render(request, template, context)
+
+
+def profile_index(request, username):
+    # получаем теги и фильтр по ним
+    tags, tags_filter = get_tags(request)
+
+    recipes = Recipe.objects.select_related('author')
+    if tags_filter:
+        recipes = recipes.filter(tags_filter)
+
+    author = get_object_or_404(User, username=username)
+    recipes = recipes.filter(author=author)
+    title = author.get_full_name()
+    template = 'profile_index.html'
 
     # получаем пагинатор и номер страницы
     page, paginator = get_pagination_info(request, recipes)
@@ -123,8 +143,8 @@ def download_purchase_list(request):
                 ingredients[title] = [amount, dimension]
 
     # добавим полученный словарь в файл и отдадим его в Response
-    purchase_list_name = 'Список покупок.txt'
-    file = f'upload_files/{purchase_list_name}'
+    purchase_name = 'Список покупок.txt'
+    file = f'upload_files/{purchase_name}'
     with open(file, 'w') as f:
         for ingredient_title, amount_dimension in ingredients.items():
             print(f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]}', file=f)

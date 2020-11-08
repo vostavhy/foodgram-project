@@ -56,7 +56,7 @@ class Recipe(models.Model):
 
 class Purchase(models.Model):
     """заказ для выгрузки списка ингридиентов в txt"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases', verbose_name='Пользователь')
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, blank=True, null=True, related_name='purchases',
                                verbose_name='Рецепт')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')

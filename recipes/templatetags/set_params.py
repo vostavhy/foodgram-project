@@ -1,7 +1,5 @@
 from django import template
 
-from recipes.models import Purchase
-
 register = template.Library()
 
 
@@ -10,17 +8,17 @@ def set_tags(request, name):
     """устанавливаем GET параметры в зависимости от выбранных тегов"""
     # получим список тегов из url
     request_copy = request.GET.copy()
-    tags_list = request_copy.getlist('tag')
+    tags = request_copy.getlist('tag')
 
     # если тег уже был выбран - удаляем его из GET параметров
-    if name in tags_list:
-        tags_list.remove(name)
+    if name in tags:
+        tags.remove(name)
 
     # если тег не был выбран, прописываем его в GET параметры
     else:
-        tags_list.append(name)
+        tags.append(name)
 
-    request_copy.setlist('tag', tags_list)
+    request_copy.setlist('tag', tags)
     return request_copy.urlencode()
 
 
