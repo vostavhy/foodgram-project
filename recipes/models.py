@@ -32,7 +32,7 @@ class Recipe(models.Model):
     preparation_time = models.IntegerField(verbose_name='Время приготовления', help_text='в минутах')
     image = models.ImageField(upload_to='recipes/images/', verbose_name='Изображение', help_text='поле для рисунка')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')
-    tags = MultiSelectField(choices=TAGS, blank=True, null=True, verbose_name='Теги')
+    tags = MultiSelectField(choices=TAGS, default=BREAKFAST, verbose_name='Теги')
 
     # перегрузим Manager для данной модели
     objects = RecipeQuerySet.as_manager()

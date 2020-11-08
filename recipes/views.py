@@ -159,6 +159,7 @@ def recipe_create(request):
 
     if request.method == 'POST':
         form = RecipeForm(request.POST, files=request.FILES or None)
+        context['form'] = form
 
         if form.is_valid():
             # списки названий игредиентов и их количества
