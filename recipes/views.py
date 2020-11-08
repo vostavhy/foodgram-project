@@ -173,8 +173,9 @@ def recipe_create(request):
 
             # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
             for i in range(len(ingredient_titles)):
+                ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
                 RecipeIngredient.objects.create(recipe=recipe,
-                                                ingredient=Ingredient.objects.get(title=ingredient_titles[i]),
+                                                ingredient=ingredient,
                                                 amount=ingredient_amounts[i])
             return redirect('index')
         return render(request, template, context)
@@ -213,8 +214,9 @@ def recipe_edit(request, pk):
 
             # добавим связующие модели между рецептом и игредиентами заново
             for i in range(len(ingredient_titles)):
+                ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
                 RecipeIngredient.objects.create(recipe=recipe,
-                                                ingredient=Ingredient.objects.get(title=ingredient_titles[i]),
+                                                ingredient=ingredient,
                                                 amount=ingredient_amounts[i])
             return redirect('recipe_index', pk=recipe.id)
         return render(request, template, context)
@@ -226,12 +228,3 @@ def recipe_delete(request, pk):
     recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может удалить рецепт
     recipe.delete()
     return redirect('index')
-
-
-def page_not_found(request, exception):
-    # exception содержит отладочную информацию
-    return render(request, 'misc/404.html', {'path': request.path}, status=404)
-
-
-def server_error(request):
-    return render(request, 'misc/500.html', status=500)

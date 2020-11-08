@@ -3,7 +3,6 @@
         <nav class="nav">
             <div class="nav__container container">
                 {% if user.is_authenticated %}
-                    {% set_purchase_number request as number %}
                     <ul class="nav__items list">
                         <li class="nav__item {% if request.path == '/' %}nav__item_active{% endif %}"><a href="/" class="nav__link link">Рецепты</a></li>
                         <li class="nav__item {% if request.path == '/subscription/' %}nav__item_active{% endif %}"><a href="{% url 'subscription_index' %}" class="nav__link link">Мои подписки</a></li>

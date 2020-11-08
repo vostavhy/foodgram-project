@@ -5,9 +5,13 @@ from multiselectfield import MultiSelectField
 User = get_user_model()
 
 # теги на старнице рецепта
-TAGS = (('breakfast', 'Завтрак'),
-        ('lunch', 'Обед'),
-        ('dinner', 'Ужин'))
+BREAKFAST = 'breakfast'
+LUNCH = 'lunch'
+DINNER = 'dinner'
+
+TAGS = ((BREAKFAST, 'Завтрак'),
+        (LUNCH, 'Обед'),
+        (DINNER, 'Ужин'))
 
 
 class RecipeQuerySet(models.QuerySet):
@@ -25,8 +29,8 @@ class Recipe(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes', verbose_name='Автор')
     name = models.CharField(max_length=100, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
-    preparation_time = models.IntegerField(verbose_name='Время приготовления')  # в минутах
-    image = models.ImageField(upload_to='recipes/images/', verbose_name='Изображение')  # поле для рисунка
+    preparation_time = models.IntegerField(verbose_name='Время приготовления', help_text='в минутах')
+    image = models.ImageField(upload_to='recipes/images/', verbose_name='Изображение', help_text='поле для рисунка')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Дата создания')
     tags = MultiSelectField(choices=TAGS, blank=True, null=True, verbose_name='Теги')
 

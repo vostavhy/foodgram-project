@@ -35,8 +35,8 @@ urlpatterns = [
 ]
 
 # обработка ошибок 404, 500
-handler404 = 'recipes.views.page_not_found'  # noqa
-handler500 = 'recipes.views.server_error'  # noqa
+handler404 = 'foodgram.views.page_not_found'  # noqa
+handler500 = 'foodgram.views.server_error'  # noqa
 
 # для получения статики и изображений в DEBUG mode
 if settings.DEBUG:

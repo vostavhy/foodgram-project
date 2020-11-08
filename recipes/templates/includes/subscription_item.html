@@ -13,7 +13,7 @@
                 {% if author.recipes.all.count > 3 %}
 
                     {% for recipe in author.recipes.all|separate %}
-                        {% include 'subscription_recipe_item.html' with recipe=recipe %}
+                        {% include 'includes/subscription_recipe_item.html' with recipe=recipe %}
                     {% endfor %}
 
                     <li class="card-user__item">
@@ -22,7 +22,7 @@
                 {% else %}
 
                     {% for recipe in author.recipes.all %}
-                        {% include 'subscription_recipe_item.html' with recipe=recipe %}
+                        {% include 'includes/subscription_recipe_item.html' with recipe=recipe %}
                     {% endfor %}
 
                 {% endif %}
