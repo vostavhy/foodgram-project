@@ -16,12 +16,12 @@ TAGS = ((BREAKFAST, 'Завтрак'),
 
 class RecipeQuerySet(models.QuerySet):
 
-    # список покупок одного пользователя
     def purchases(self, user):
+        """список покупок одного пользователя"""
         return self.filter(purchases__user=user)
 
-    # список избранных рецептов одного пользователя
     def favorites(self, user):
+        """список избранных рецептов одного пользователя"""
         return self.filter(favorites__user=user)
 
 
@@ -40,16 +40,13 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-    # получить список ингредиентов и их количества для определенного рецепта
     @property
     def ingredients(self):
-        ingredients = Ingredient.objects.filter(ingredient_res__recipe=self)
-        ingredients_list = []
-        for ingredient in ingredients:
-            amount = RecipeIngredient.objects.get(recipe=self, ingredient=ingredient).amount
-            ingredients_list.append((ingredient, amount))
-
-        return ingredients_list
+        """получить список ингредиентов и их количества для определенного рецепта"""
+        ingredients = (RecipeIngredient.objects.filter(recipe=self)
+                       .select_related('ingredient')
+                       .values_list('ingredient__title', 'amount', 'ingredient__dimension'))
+        return ingredients
 
     class Meta:
         ordering = ['-created_at', ]

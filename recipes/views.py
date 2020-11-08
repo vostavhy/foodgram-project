@@ -112,16 +112,15 @@ def download_purchase_list(request):
     # с учетом того, что ингредиенты могут повторяться в разных рецептах,
     # составим сводный словарь списка игредиентов и их единиц измерения со всех рецептов в покупках
     for recipe in recipes:
-        ingredients_list = recipe.ingredients
-        for ingredient, amount in ingredients_list:
+        for title, amount, dimension in recipe.ingredients:
 
             # если ингредиент уже есть - добавляем его количество к уже имеющемуся значению
-            if ingredient.title in ingredients_dict:
-                ingredients_dict[ingredient.title][0] += amount
+            if title in ingredients_dict:
+                ingredients_dict[title][0] += amount
 
             # если нету - создаём
             else:
-                ingredients_dict[ingredient.title] = [amount, ingredient.dimension]
+                ingredients_dict[title] = [amount, dimension]
 
     # добавим полученный словарь в файл и отдадим его в Response
     purchase_list_name = 'Список покупок.txt'
