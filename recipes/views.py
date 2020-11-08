@@ -208,27 +208,25 @@ def recipe_edit(request, pk):
         'checked_tags': checked_tags,
     }
 
-    if request.method == 'POST':
-        if form.is_valid():
-            # списки названий игредиентов и их количества
-            ingredient_titles = request.POST.getlist('nameIngredient')
-            ingredient_amounts = request.POST.getlist('valueIngredient')
-            if len(ingredient_titles) != len(ingredient_amounts):
-                return render(request, template, context)
+    if form.is_valid():
+        # списки названий игредиентов и их количества
+        ingredient_titles = request.POST.getlist('nameIngredient')
+        ingredient_amounts = request.POST.getlist('valueIngredient')
+        if len(ingredient_titles) != len(ingredient_amounts):
+            return render(request, template, context)
 
-            form.save()
+        form.save()
 
-            # чтобы не дублировались ингредиенты
-            RecipeIngredient.objects.filter(recipe=recipe).delete()
+        # чтобы не дублировались ингредиенты
+        RecipeIngredient.objects.filter(recipe=recipe).delete()
 
-            # добавим связующие модели между рецептом и игредиентами заново
-            for i in range(len(ingredient_titles)):
-                ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
-                RecipeIngredient.objects.create(recipe=recipe,
-                                                ingredient=ingredient,
-                                                amount=ingredient_amounts[i])
-            return redirect('recipe_index', pk=recipe.id)
-        return render(request, template, context)
+        # добавим связующие модели между рецептом и игредиентами заново
+        for i in range(len(ingredient_titles)):
+            ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
+            RecipeIngredient.objects.create(recipe=recipe,
+                                            ingredient=ingredient,
+                                            amount=ingredient_amounts[i])
+        return redirect('recipe_index', pk=recipe.id)
     return render(request, template, context)
 
 
