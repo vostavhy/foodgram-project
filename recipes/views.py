@@ -107,7 +107,7 @@ def purchase_index(request):
 def download_purchase_list(request):
 
     recipes = Recipe.objects.purchases(user=request.user)
-    ingredients_dict = dict()
+    ingredients = dict()
 
     # с учетом того, что ингредиенты могут повторяться в разных рецептах,
     # составим сводный словарь списка игредиентов и их единиц измерения со всех рецептов в покупках
@@ -115,18 +115,18 @@ def download_purchase_list(request):
         for title, amount, dimension in recipe.ingredients:
 
             # если ингредиент уже есть - добавляем его количество к уже имеющемуся значению
-            if title in ingredients_dict:
-                ingredients_dict[title][0] += amount
+            if title in ingredients:
+                ingredients[title][0] += amount
 
             # если нету - создаём
             else:
-                ingredients_dict[title] = [amount, dimension]
+                ingredients[title] = [amount, dimension]
 
     # добавим полученный словарь в файл и отдадим его в Response
     purchase_list_name = 'Список покупок.txt'
     file = f'upload_files/{purchase_list_name}'
     with open(file, 'w') as f:
-        for ingredient_title, amount_dimension in ingredients_dict.items():
+        for ingredient_title, amount_dimension in ingredients.items():
             print(f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]}', file=f)
 
     response = FileResponse(open(file, 'rb'), as_attachment=True)
