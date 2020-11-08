@@ -161,7 +161,7 @@ def recipe_index(request, pk):
 @login_required
 def recipe_create(request):
     template = 'recipe_form.html'
-    form = RecipeForm()
+    form = RecipeForm(request.POST or None, files=request.FILES or None)
     title = 'Создание рецепта'
     button_name = 'Создать рецепт'
     context = {
@@ -170,29 +170,24 @@ def recipe_create(request):
         'button_name': button_name
     }
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, files=request.FILES or None)
-        context['form'] = form
+    if form.is_valid():
+        # списки названий игредиентов и их количества
+        ingredient_titles = request.POST.getlist('nameIngredient')
+        ingredient_amounts = request.POST.getlist('valueIngredient')
+        if len(ingredient_titles) != len(ingredient_amounts):
+            return render(request, template, context)
 
-        if form.is_valid():
-            # списки названий игредиентов и их количества
-            ingredient_titles = request.POST.getlist('nameIngredient')
-            ingredient_amounts = request.POST.getlist('valueIngredient')
-            if len(ingredient_titles) != len(ingredient_amounts):
-                return render(request, template, context)
+        recipe = form.save(commit=False)
+        recipe.author = request.user
+        recipe.save()
 
-            recipe = form.save(commit=False)
-            recipe.author = request.user
-            recipe.save()
-
-            # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
-            for i in range(len(ingredient_titles)):
-                ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
-                RecipeIngredient.objects.create(recipe=recipe,
-                                                ingredient=ingredient,
-                                                amount=ingredient_amounts[i])
-            return redirect('index')
-        return render(request, template, context)
+        # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
+        for i in range(len(ingredient_titles)):
+            ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
+            RecipeIngredient.objects.create(recipe=recipe,
+                                            ingredient=ingredient,
+                                            amount=ingredient_amounts[i])
+        return redirect('index')
     return render(request, template, context)
 
 

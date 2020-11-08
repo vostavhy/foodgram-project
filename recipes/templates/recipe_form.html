@@ -63,13 +63,13 @@
                     </div>
 
                     <div class="form__field-group-ingredientes-container">
-                        {% for ingredient, amount in recipe.ingredients %}
+                        {% for title, amount, dimension in recipe.ingredients %}
                             <div class="form__field-item-ingredient" id="ing_{{ ingredient.id }}">
-                                <span> {{ ingredient.title }} {{ amount }} {{ ingredient.dimension }} шт.</span>
+                                <span> {{ title }} {{ amount }} {{ dimension }} шт.</span>
                                 <span class="form__field-item-delete"></span>
-                                <input id="nameIngredient_{{ ingredient.id }}" name="nameIngredient" type="hidden" value="{{ ingredient.title }}">
+                                <input id="nameIngredient_{{ ingredient.id }}" name="nameIngredient" type="hidden" value="{{ title }}">
                                 <input id="valueIngredient_{{ ingredient.id }}" name="valueIngredient" type="hidden" value="{{ amount }}">
-                                <input id="unitsIngredient_{{ ingredient.id }}" name="unitsIngredient" type="hidden" value="{{ ingredient.dimension }}">
+                                <input id="unitsIngredient_{{ ingredient.id }}" name="unitsIngredient" type="hidden" value="{{ dimension }}">
                             </div>
                         {% endfor %}
                     </div>
