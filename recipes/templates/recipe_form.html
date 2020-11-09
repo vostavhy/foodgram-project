@@ -9,7 +9,7 @@
         <h1 class="main__title">{{ title }}</h1>
     </div>
 
-    {% if request.path == '/new/' %}
+    {% if request.resolver_match.url_name == 'recipe_create' %}
         {% url 'recipe_create' as form_action_url %}
     {% else %}
         {% url 'recipe_edit' pk=recipe.id as form_action_url %}
