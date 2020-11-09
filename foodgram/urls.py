@@ -29,8 +29,10 @@ urlpatterns = [
     path('auth/', include('users.urls')),
 
     # flatpages
-    path('about-author/', views.flatpage, {'url': 'about-author/'}, name='about-author'),
-    path('about-site/', views.flatpage, {'url': 'about-site/'}, name='about-site'),
+    path('about-author/',
+         views.flatpage, {'url': 'about-author/'}, name='about-author'),
+    path('about-site/',
+         views.flatpage, {'url': 'about-site/'}, name='about-site'),
 
     # обработчик главной страницы ищем в urls.py приложения recipes
     path('', include('recipes.urls')),
@@ -44,8 +46,10 @@ handler500 = 'foodgram.views.server_error'  # noqa
 if settings.DEBUG:
     import debug_toolbar
 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
 
     # для работы debug_toolbar
     urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)

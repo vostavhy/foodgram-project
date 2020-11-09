@@ -29,7 +29,9 @@ class PurchaseViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         """удаление рецепта из списка покупок."""
-        instance = get_object_or_404(Purchase, recipe_id=int(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Purchase,
+                                     recipe_id=int(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 
@@ -48,7 +50,9 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         """удаление рецепта из списка избранного."""
-        instance = get_object_or_404(Favorite, recipe_id=int(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Favorite,
+                                     recipe_id=int(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 
@@ -67,7 +71,9 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         """удаление подписки на автора."""
-        instance = get_object_or_404(Subscription, author_id=(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Subscription,
+                                     author_id=(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 

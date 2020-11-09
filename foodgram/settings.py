@@ -61,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
@@ -107,16 +106,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.'
+                'auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.'
+                'auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.'
+                'auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib'
+                '.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -138,9 +141,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# теперь логотип можно будет запросить по адресу sitename.ex**/static/**images/logo.png
+# теперь логотип доступен по адресу sitename.ex**/static/**images/logo.png
 
-# задаём адрес директории, куда командой *collectstatic* будет собрана вся статика
+# адрес директории, куда командой *collectstatic* будет собрана вся статика
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # путь к дирректории для загрузки изображений
@@ -166,8 +169,10 @@ if DEBUG is False:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-        'handlers': {'console': {'level': 'DEBUG', 'class': 'logging.StreamHandler'}},
-        'loggers': {'django.db.backends': {'handlers': ['console'], 'level': 'DEBUG'}},
+        'handlers': {'console': {'level': 'DEBUG',
+                                 'class': 'logging.StreamHandler'}},
+        'loggers': {'django.db.backends': {'handlers': ['console'],
+                                           'level': 'DEBUG'}},
     }
 
 # Кеширование
@@ -182,7 +187,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
 REST_FRAMEWORK = {
-        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework'
+                                    '.pagination.PageNumberPagination',
         'PAGE_SIZE': 10,
         'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
