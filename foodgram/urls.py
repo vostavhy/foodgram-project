@@ -17,6 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.flatpages import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +29,8 @@ urlpatterns = [
     path('auth/', include('users.urls')),
 
     # flatpages
-    path('pages/', include('django.contrib.flatpages.urls')),
+    path('about-author/', views.flatpage, {'url': 'about-author/'}, name='about-author'),
+    path('about-site/', views.flatpage, {'url': 'about-site/'}, name='about-site'),
 
     # обработчик главной страницы ищем в urls.py приложения recipes
     path('', include('recipes.urls')),

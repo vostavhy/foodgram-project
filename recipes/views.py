@@ -182,11 +182,11 @@ def recipe_create(request):
         recipe.save()
 
         # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
-        for i in range(len(ingredient_titles)):
-            ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
+        for title, amount in zip(ingredient_titles, ingredient_amounts):
+            ingredient = get_object_or_404(Ingredient, title=title)
             RecipeIngredient.objects.create(recipe=recipe,
                                             ingredient=ingredient,
-                                            amount=ingredient_amounts[i])
+                                            amount=amount)
         return redirect('index')
     return render(request, template, context)
 
@@ -221,11 +221,11 @@ def recipe_edit(request, pk):
         RecipeIngredient.objects.filter(recipe=recipe).delete()
 
         # добавим связующие модели между рецептом и игредиентами заново
-        for i in range(len(ingredient_titles)):
-            ingredient = get_object_or_404(Ingredient, title=ingredient_titles[i])
+        for title, amount in zip(ingredient_titles, ingredient_amounts):
+            ingredient = get_object_or_404(Ingredient, title=title)
             RecipeIngredient.objects.create(recipe=recipe,
                                             ingredient=ingredient,
-                                            amount=ingredient_amounts[i])
+                                            amount=amount)
         return redirect('recipe_index', pk=recipe.id)
     return render(request, template, context)
 
