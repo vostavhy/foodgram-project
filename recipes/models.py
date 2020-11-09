@@ -4,15 +4,6 @@ from multiselectfield import MultiSelectField
 
 User = get_user_model()
 
-# теги на старнице рецепта
-BREAKFAST = 'breakfast'
-LUNCH = 'lunch'
-DINNER = 'dinner'
-
-TAGS = ((BREAKFAST, 'Завтрак'),
-        (LUNCH, 'Обед'),
-        (DINNER, 'Ужин'))
-
 
 class RecipeQuerySet(models.QuerySet):
 
@@ -26,6 +17,15 @@ class RecipeQuerySet(models.QuerySet):
 
 
 class Recipe(models.Model):
+    # теги на старнице рецепта
+    BREAKFAST = 'breakfast'
+    LUNCH = 'lunch'
+    DINNER = 'dinner'
+
+    TAGS = ((BREAKFAST, 'Завтрак'),
+            (LUNCH, 'Обед'),
+            (DINNER, 'Ужин'))
+
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='recipes',
