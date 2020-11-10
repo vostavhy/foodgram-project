@@ -25,7 +25,6 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         recipe_id = int(self.request.data.get('id'))
         recipe = get_object_or_404(Recipe, id=recipe_id)
         serializer.save(user=self.request.user, recipe=recipe)
-        return Response({"success": True})
 
     def destroy(self, request, *args, **kwargs):
         """удаление рецепта из списка покупок."""
