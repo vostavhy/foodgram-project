@@ -13,21 +13,19 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
 class FavoriteSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    id = serializers.IntegerField
 
     class Meta:
         model = Favorite
-        fields = ['recipe', 'user', 'id']
+        fields = '__all__'
         read_only_fields = ['recipe']
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    id = serializers.IntegerField
 
     class Meta:
         model = Subscription
-        fields = ['author', 'user', 'id']
+        fields = '__all__'
         read_only_fields = ['author']
 
 
