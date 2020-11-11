@@ -25,11 +25,12 @@ class PurchaseViewSet(viewsets.ModelViewSet):
         recipe_id = int(self.request.data.get('id'))
         recipe = get_object_or_404(Recipe, id=recipe_id)
         serializer.save(user=self.request.user, recipe=recipe)
-        return Response({"success": True})
 
     def destroy(self, request, *args, **kwargs):
         """удаление рецепта из списка покупок."""
-        instance = get_object_or_404(Purchase, recipe_id=int(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Purchase,
+                                     recipe_id=int(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 
@@ -39,16 +40,17 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
 
-    def create(self, request, *args, **kwargs):
+    def perform_create(self, serializer):
         """добавление рецепта в список избранного."""
-        recipe_id = int(request.data.get('id'))
+        recipe_id = self.request.data.get('id')
         recipe = get_object_or_404(Recipe, id=recipe_id)
-        Favorite.objects.create(user=request.user, recipe=recipe)
-        return Response({"success": True})
+        serializer.save(user=self.request.user, recipe=recipe)
 
     def destroy(self, request, *args, **kwargs):
         """удаление рецепта из списка избранного."""
-        instance = get_object_or_404(Favorite, recipe_id=int(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Favorite,
+                                     recipe_id=int(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 
@@ -58,16 +60,17 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
-    def create(self, request, *args, **kwargs):
-        """добавление подписки на автора."""
-        author_id = int(request.data.get('id'))
+    def perform_create(self, serializer):
+        """добавление рецепта в список покупок."""
+        author_id = int(self.request.data.get('id'))
         author = get_object_or_404(User, id=author_id)
-        Subscription.objects.create(author=author, user=request.user)
-        return Response({"success": True})
+        serializer.save(user=self.request.user, author=author)
 
     def destroy(self, request, *args, **kwargs):
         """удаление подписки на автора."""
-        instance = get_object_or_404(Subscription, author_id=(kwargs.get('pk')), user=request.user)
+        instance = get_object_or_404(Subscription,
+                                     author_id=(kwargs.get('pk')),
+                                     user=request.user)
         self.perform_destroy(instance)
         return Response({"success": True})
 

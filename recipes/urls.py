@@ -25,6 +25,7 @@ urlpatterns = [
     # страница списка покупок
     path('purchase/', views.purchase_index, name='purchase_index'),
     # загрузить список покупок
-    path('purchase_download/', views.download_purchase_list, name='download_purchase_list')
+    path('purchase_download/', views.download_purchase_list,
+         name='download_purchase_list')
 
 ]

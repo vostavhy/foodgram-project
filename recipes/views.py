@@ -67,7 +67,8 @@ def favorite_index(request):
     tags, tags_filter = get_tags(request)
 
     # выгружаем рецепты в избранном у авторизованного пользователя
-    recipes = Recipe.objects.favorites(user=request.user).select_related('author')
+    recipes = (Recipe.objects.
+               favorites(user=request.user).select_related('author'))
     if tags_filter:
         recipes = recipes.filter(tags_filter)
 
@@ -76,7 +77,9 @@ def favorite_index(request):
     items_on_page = 3
 
     # получаем пагинатор и номер страницы
-    page, paginator = get_pagination_info(request, recipes, per_page=items_on_page)
+    page, paginator = get_pagination_info(request,
+                                          recipes,
+                                          per_page=items_on_page)
 
     context = {
         'page': page,
@@ -90,14 +93,18 @@ def favorite_index(request):
 
 @login_required
 def subscription_index(request):
-    authors = User.objects.filter(followers__user=request.user).prefetch_related('recipes')
+    authors = (User.objects.
+               filter(followers__user=request.user).
+               prefetch_related('recipes'))
 
     title = 'Мои подписки'
     template = 'subscription_index.html'
     items_on_page = 3
 
     # получаем пагинатор и номер страницы
-    page, paginator = get_pagination_info(request, authors, per_page=items_on_page)
+    page, paginator = get_pagination_info(request,
+                                          authors,
+                                          per_page=items_on_page)
 
     context = {
         'page': page,
@@ -130,7 +137,8 @@ def download_purchase_list(request):
     ingredients = dict()
 
     # с учетом того, что ингредиенты могут повторяться в разных рецептах,
-    # составим сводный словарь списка игредиентов и их единиц измерения со всех рецептов в покупках
+    # составим сводный словарь списка игредиентов
+    # и их единиц измерения со всех рецептов в покупках
     for recipe in recipes:
         for title, amount, dimension in recipe.ingredients:
             ingredients[title] = ingredients.get(title, [0, dimension])
@@ -140,7 +148,8 @@ def download_purchase_list(request):
     file_name = 'Purchase list.txt'
     txt = ''
     for ingredient_title, amount_dimension in ingredients.items():
-        txt += f'{ingredient_title}: {amount_dimension[0]} {amount_dimension[1]} \n'
+        txt += (f'{ingredient_title}: '
+                f'{amount_dimension[0]} {amount_dimension[1]} \n')
 
     response = HttpResponse(txt, content_type='application/text charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename={file_name}'
@@ -181,7 +190,7 @@ def recipe_create(request):
         recipe.author = request.user
         recipe.save()
 
-        # после сохранения рецепта, добавим связующие модели между рецептом и игредиентами
+        # добавим связующие модели между рецептом и игредиентами
         for title, amount in zip(ingredient_titles, ingredient_amounts):
             ingredient = get_object_or_404(Ingredient, title=title)
             RecipeIngredient.objects.create(recipe=recipe,
@@ -193,8 +202,11 @@ def recipe_create(request):
 
 @login_required
 def recipe_edit(request, pk):
-    recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может редактировать рецепт
-    form = RecipeForm(request.POST or None, files=request.FILES or None, instance=recipe)
+    # только автор может редактировать рецепт
+    recipe = get_object_or_404(Recipe, author=request.user, id=pk)
+    form = RecipeForm(request.POST or None,
+                      files=request.FILES or None,
+                      instance=recipe)
 
     template = 'recipe_form.html'
     title = 'Редактирование рецепта'
@@ -232,6 +244,7 @@ def recipe_edit(request, pk):
 
 @login_required
 def recipe_delete(request, pk):
-    recipe = get_object_or_404(Recipe, author=request.user, id=pk)  # только автор может удалить рецепт
+    # только автор может удалить рецепт
+    recipe = get_object_or_404(Recipe, author=request.user, id=pk)
     recipe.delete()
     return redirect('index')

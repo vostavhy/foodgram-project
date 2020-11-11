@@ -17,7 +17,8 @@ class SignUP(CreateView):
             user.save()
 
             subject = f"Greetings {user.username}"
-            message = f"Greetings {user.username} on our site! Your registration was successfully confirmed!"
+            message = (f"Greetings {user.username} on our site! "
+                       f"Your registration was successfully confirmed!")
             to_mail = user.email_user
             from_email = 'example@my_email.com'
 

@@ -15,16 +15,18 @@ class FavoriteSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
-        fields = '__all__'
         model = Favorite
+        fields = '__all__'
+        read_only_fields = ['recipe']
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
-        fields = '__all__'
         model = Subscription
+        fields = '__all__'
+        read_only_fields = ['author']
 
 
 class IngredientSerializer(serializers.ModelSerializer):
