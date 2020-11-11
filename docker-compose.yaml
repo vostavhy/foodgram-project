@@ -5,6 +5,7 @@ version: '3.8'
 volumes:
   postgres_data:
   static_volume:
+  media_volume:
 
 # имена и описания контейнеров, которые должны быть развёрнуты
 services:
@@ -16,29 +17,29 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     # адрес файла, где хранятся переменные окружения
-    environment:
-      - POSTGRES_USER=foodgram_user
-      - POSTGRES_PASSWORD=foodgram_pass
-      - POSTGRES_DB=foodgram
+    env_file:
+      - ./foodgram/.env.db
   web:
     build: .
     restart: always
     command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/app/static
+      - media_volume:/app/media
     expose:
       - 8000
     # "зависит от",
     depends_on:
       - db
     env_file:
-      - foodgram/.env
+      - ./foodgram/.env
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
     volumes:
       - static_volume:/app/static
+      - media_volume:/app/media
     ports:
       - 1337:80
     depends_on:

@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 foodgram/.env
+foodgram/.env.db
 .venv
 env/
 venv/
