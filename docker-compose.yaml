@@ -18,7 +18,7 @@ services:
     # адрес файла, где хранятся переменные окружения
     environment:
       - POSTGRES_USER=foodgram_user
-      - POSTGRES_PASSWORD=10postgres_password23
+      - POSTGRES_PASSWORD=foodgram_pass
       - POSTGRES_DB=foodgram
   web:
     build: .

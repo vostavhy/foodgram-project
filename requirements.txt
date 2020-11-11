@@ -18,12 +18,13 @@ django==3.1.2             # via -r requirements.in, django-cors-headers, django-
 djangorestframework-simplejwt==4.5.0  # via -r requirements.in
 djangorestframework==3.12.1  # via -r requirements.in, djangorestframework-simplejwt
 flake8==3.8.4             # via -r requirements.in
+gunicorn==20.0.4          # via -r requirements.in
 idna==2.10                # via requests
 iniconfig==1.1.1          # via pytest
 isort==5.6.4              # via -r requirements.in
 mccabe==0.6.1             # via flake8
 packaging==20.4           # via pytest
-Pillow==8.0.0             # via -r requirements.in
+pillow==7.2.0             # via -r requirements.in
 pip-tools==5.3.1          # via -r requirements.in
 pluggy==0.13.1            # via pytest
 psycopg2-binary==2.8.6    # via -r requirements.in
@@ -44,3 +45,4 @@ urllib3==1.25.10          # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
+# setuptools
