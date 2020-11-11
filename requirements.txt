@@ -11,6 +11,7 @@ chardet==3.0.4            # via requests
 click==7.1.2              # via pip-tools
 django-cors-headers==3.5.0  # via -r requirements.in
 django-debug-toolbar==3.1.1  # via -r requirements.in
+django-environ==0.4.5     # via -r requirements.in
 django-filter==2.4.0      # via -r requirements.in
 django-multiselectfield==0.1.12  # via -r requirements.in
 django==3.1.2             # via -r requirements.in, django-cors-headers, django-debug-toolbar, django-filter, django-multiselectfield, djangorestframework, djangorestframework-simplejwt
@@ -25,6 +26,7 @@ packaging==20.4           # via pytest
 pillow==8.0.0             # via -r requirements.in
 pip-tools==5.3.1          # via -r requirements.in
 pluggy==0.13.1            # via pytest
+psycopg2-binary==2.8.6    # via -r requirements.in
 py==1.9.0                 # via pytest
 pycodestyle==2.6.0        # via flake8
 pyflakes==2.2.0           # via flake8
