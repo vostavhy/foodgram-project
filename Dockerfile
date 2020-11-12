@@ -12,9 +12,6 @@ RUN apk update\
 WORKDIR /app
 COPY ./ ./
 
-# создать папку для статики
-RUN mkdir /static
-
 # установить все зависимости
 RUN pip install -r requirements.txt
 
