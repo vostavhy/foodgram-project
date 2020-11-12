@@ -39,7 +39,6 @@ jobs:
       - name: Push web to Docker Hub
         uses: docker/build-push-action@v1
         with:
-          file: ./Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: vostavhy/foodgram_web
@@ -48,7 +47,7 @@ jobs:
       - name: Push nginx to Docker Hub
         uses: docker/build-push-action@v1
         with:
-          file: ./nginx/Dockerfile
+          file: nginx/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: vostavhy/foodgram_nginx
