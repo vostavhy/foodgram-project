@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '84.201.162.40']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split()
 
 # необходим для debug_toolbar
 INTERNAL_IPS = [
@@ -166,17 +166,17 @@ LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'index'
 # LOGOUT_REDIRECT_URL = "index"
 
-if DEBUG is True:
-    # подключаем движок для сохранения электронных писем в виде файлов
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    # дирректория, куда будут складываться файлы писем
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+# подключаем движок для сохранения электронных писем в виде файлов
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# дирректория, куда будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 # Идентификатор текущего сайта. Необходим для flatpages
 SITE_ID = 1
 
 # Logging
-if DEBUG is False:
+if DEBUG is True:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
