@@ -54,7 +54,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: vostavhy/foodgram_web:latest
+          tags: vostavhy/foodgram_web:1.0
 
       - name: Build and push nginx
         uses: docker/build-push-action@v2
@@ -62,4 +62,4 @@ jobs:
           context: ./nginx
           file: ./nginx/Dockerfile
           push: true
-          tags: vostavhy/foodgram_nginx:latest
+          tags: vostavhy/foodgram_nginx:1.0

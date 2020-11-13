@@ -20,7 +20,7 @@ services:
     env_file:
       - ./foodgram/.env.db
   web:
-    image: vostavhy/foodgram_web:latest
+    image: vostavhy/foodgram_web:1.0
     restart: always
     command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -34,7 +34,7 @@ services:
     env_file:
       - ./foodgram/.env
   nginx:
-    image: vostavhy/foodgram_nginx:latest
+    image: vostavhy/foodgram_nginx:1.0
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
