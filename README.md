@@ -8,11 +8,25 @@
 #### Шаг первый. Установка Docker и docker-compose
 Для установки воспользуйтесь официальной [инструкцией](https://docs.docker.com/engine/install/).
 
-#### Шаг второй. Сборка и запуск контейнера
+#### Шаг второй. Установка переменных окружения
+в папке foodgram создайте файл .env с следующим содержанием (значения переменных приведены для примера):
+```bash
+DB_ENGINE=django.db.backends.postgresql
+DB_HOST=db
+DB_PORT=5432
+POSTGRES_DB=foodgram
+POSTGRES_USER=foodgram_user
+POSTGRES_PASSWORD=foodgram_pass
+
+SECRET_KEY=&*eziv-@m%+)!ptxv4&2%b_&asw32rkfsc9b)9h4k9wfze=fn-@z65%(czasdfa
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 
+```
+
+#### Шаг третией. Сборка и запуск контейнера
 ```bash
 docker-compose up -d --build
 ```
-#### Шаг третий. База данных
+#### Шаг четвертый. База данных
 ```bash
 docker-compose run web python manage.py makemigrations --no-input
 docker-compose run web python manage.py migrate --no-input
