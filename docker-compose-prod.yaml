@@ -18,7 +18,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     # адрес файла, где хранятся переменные окружения
     env_file:
-      - ./foodgram/.env.db
+      - foodgram/.env
   web:
     image: vostavhy/foodgram_web:1.0
     restart: always
@@ -32,7 +32,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./foodgram/.env
+      - foodgram/.env
   nginx:
     image: vostavhy/foodgram_nginx:1.0
     volumes:
