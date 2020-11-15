@@ -34,12 +34,12 @@ docker-compose run web python manage.py loaddata fixtures.json
 ```
 
 ## Использование
-### Запуск контейнера
+### Запуск контейнеров
 ```bash
 docker-compose up
 ```
 
-### Выключение контейнера
+### Выключение контейнеров
 ```bash
 docker-compose down
 ```
