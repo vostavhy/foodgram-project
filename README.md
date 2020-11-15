@@ -22,7 +22,7 @@ SECRET_KEY=&*eziv-@m%+)!ptxv4&2%b_&asw32rkfsc9b)9h4k9wfze=fn-@z65%(czasdfa
 DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] 
 ```
 
-#### Шаг третией. Сборка и запуск контейнера
+#### Шаг третий. Сборка и запуск контейнера
 ```bash
 docker-compose up -d --build
 ```
