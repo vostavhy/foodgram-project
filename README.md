@@ -1,5 +1,4 @@
 # foodgram-project. Дипломный проект курса python developer от Yandex Praktikum
-сайт доступен по адресу http://84.201.162.40/
 
 ![Build Status](https://github.com/vostavhy/foodgram-project/workflows/foodgram/badge.svg)
 
