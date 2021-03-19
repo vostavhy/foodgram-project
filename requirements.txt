@@ -4,44 +4,95 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
-asgiref==3.2.10           # via django
-attrs==20.2.0             # via pytest
-certifi==2020.6.20        # via requests
-chardet==3.0.4            # via requests
-click==7.1.2              # via pip-tools
-django-cors-headers==3.5.0  # via -r requirements.in
-django-debug-toolbar==3.1.1  # via -r requirements.in
-django-environ==0.4.5     # via -r requirements.in
-django-filter==2.4.0      # via -r requirements.in
-django-multiselectfield==0.1.12  # via -r requirements.in
-django==3.1.2             # via -r requirements.in, django-cors-headers, django-debug-toolbar, django-filter, django-multiselectfield, djangorestframework, djangorestframework-simplejwt
-djangorestframework-simplejwt==4.5.0  # via -r requirements.in
-djangorestframework==3.12.1  # via -r requirements.in, djangorestframework-simplejwt
-flake8==3.8.4             # via -r requirements.in
-gunicorn==20.0.4          # via -r requirements.in
-idna==2.10                # via requests
-iniconfig==1.1.1          # via pytest
-isort==5.6.4              # via -r requirements.in
-mccabe==0.6.1             # via flake8
-packaging==20.4           # via pytest
-pillow==8.0.0             # via -r requirements.in
-pip-tools==5.3.1          # via -r requirements.in
-pluggy==0.13.1            # via pytest
-psycopg2-binary==2.8.6    # via -r requirements.in
-py==1.9.0                 # via pytest
-pycodestyle==2.6.0        # via flake8
-pyflakes==2.2.0           # via flake8
-pyjwt==1.7.1              # via djangorestframework-simplejwt
-pyparsing==2.4.7          # via packaging
-pytest-django==4.0.0      # via -r requirements.in
-pytest==6.1.1             # via pytest-django
-pytz==2020.1              # via django
-requests==2.24.0          # via -r requirements.in
-six==1.15.0               # via packaging, pip-tools
-sorl-thumbnail==12.6.3    # via -r requirements.in
-sqlparse==0.4.1           # via django, django-debug-toolbar
-toml==0.10.1              # via pytest
-urllib3==1.25.10          # via requests
+asgiref==3.2.10
+    # via django
+attrs==20.2.0
+    # via pytest
+certifi==2020.6.20
+    # via requests
+chardet==3.0.4
+    # via requests
+click==7.1.2
+    # via pip-tools
+django-cors-headers==3.5.0
+    # via -r requirements.in
+django-debug-toolbar==3.1.1
+    # via -r requirements.in
+django-environ==0.4.5
+    # via -r requirements.in
+django-filter==2.4.0
+    # via -r requirements.in
+django-multiselectfield==0.1.12
+    # via -r requirements.in
+django==3.1.2
+    # via
+    #   -r requirements.in
+    #   django-cors-headers
+    #   django-debug-toolbar
+    #   django-filter
+    #   django-multiselectfield
+    #   djangorestframework
+    #   djangorestframework-simplejwt
+djangorestframework-simplejwt==4.5.0
+    # via -r requirements.in
+djangorestframework==3.12.1
+    # via
+    #   -r requirements.in
+    #   djangorestframework-simplejwt
+flake8==3.8.4
+    # via -r requirements.in
+gunicorn==20.0.4
+    # via -r requirements.in
+idna==2.10
+    # via requests
+iniconfig==1.1.1
+    # via pytest
+isort==5.6.4
+    # via -r requirements.in
+mccabe==0.6.1
+    # via flake8
+packaging==20.4
+    # via pytest
+pillow==8.1.1
+    # via -r requirements.in
+pip-tools==5.3.1
+    # via -r requirements.in
+pluggy==0.13.1
+    # via pytest
+psycopg2-binary==2.8.6
+    # via -r requirements.in
+py==1.9.0
+    # via pytest
+pycodestyle==2.6.0
+    # via flake8
+pyflakes==2.2.0
+    # via flake8
+pyjwt==1.7.1
+    # via djangorestframework-simplejwt
+pyparsing==2.4.7
+    # via packaging
+pytest-django==4.0.0
+    # via -r requirements.in
+pytest==6.1.1
+    # via pytest-django
+pytz==2020.1
+    # via django
+requests==2.24.0
+    # via -r requirements.in
+six==1.15.0
+    # via
+    #   packaging
+    #   pip-tools
+sorl-thumbnail==12.6.3
+    # via -r requirements.in
+sqlparse==0.4.1
+    # via
+    #   django
+    #   django-debug-toolbar
+toml==0.10.1
+    # via pytest
+urllib3==1.25.10
+    # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
